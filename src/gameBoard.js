@@ -1,7 +1,8 @@
 import { Ship } from "./ship";
 
 const Gameboard = () => {
-  //generate an empty 10x10 matrix
+  //generate a 10x10 matrix, each cell with an object that contains
+  //info about whether a square is hit & the ship it contains
   const generateBoard = function () {
     let board = [];
 
@@ -9,7 +10,7 @@ const Gameboard = () => {
       board.push([]);
 
       for (let j = 0; j < 10; j++) {
-        board[i].push([]);
+        board[i].push({hit: null, ship: null});
       }
     }
   
@@ -17,19 +18,66 @@ const Gameboard = () => {
   }
 
   //insert ship to the right starting at specified row & column.
-  //accepts ship length as well
+  //accepts ship type as well
   const insertShipRight = function (row, column, shipType) {
     //insert ship object to right by number of length units(depending on type)
     if (this.board[row][column + (Ship(shipType).length -1)] !== undefined) {
       for (let i = 0; i < Ship(shipType).length; i++) {
-        this.board[row][column + i] = Ship(shipType);
+        this.board[row][column + i].ship = shipType;
       }
     }
-  }
+  };
+
+  const insertShipDown = function (row, column, shipType) {
+    if (this.board[row + (Ship(shipType).length -1)][column] !== undefined) {
+      for (let i = 0; i < Ship(shipType).length; i++) {
+        this.board[row + i][column].ship = shipType;
+      }
+    }
+  };
+
+  const insertShipLeft = function (row, column, shipType) {
+    if (this.board[row][column - (Ship(shipType).length -1)] !== undefined) {
+      for (let i = 0; i < Ship(shipType).length; i++) {
+        this.board[row][column - i].ship = shipType;
+      }
+    }
+  };
+
+  const insertShipUp = function (row, column, shipType) {
+    if (this.board[row - (Ship(shipType).length -1)][column] !== undefined) {
+      for (let i = 0; i < Ship(shipType).length; i++) {
+        this.board[row - i][column].ship = shipType;
+      }
+    }
+  };
+
+  //register a hit or miss on board square. if ship is hit, add a hit to it.
+  //if a ship is hit, check if it is sunk
+  const receiveAttack = function (row, column) {
+    if (this.board[row][column].ship !== null && this.board[row][column].hit !== true) {
+      this.board[row][column].hit = true;
+      this.ships[`${this.board[row][column].ship}`].hit();
+      this.ships[`${this.board[row][column].ship}`].isSunk();
+    } 
+    else if (this.board[row][column].ship === null) 
+      this.board[row][column].hit = false;
+  };
 
   return {
     board: generateBoard(),
-    insertShipRight
+    ships: {
+      carrier: Ship('carrier'),
+      battleship: Ship('battleship'),
+      cruiser: Ship('cruiser'),
+      submarine: Ship('submarine'),
+      destroyer: Ship('destroyer'),
+    },
+    insertShipRight,
+    insertShipDown,
+    insertShipLeft,
+    insertShipUp,
+    receiveAttack,
   }
 };
 
