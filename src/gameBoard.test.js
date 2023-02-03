@@ -1,5 +1,4 @@
 import {  Gameboard } from "./gameBoard";
-import { Ship } from "./ship";
 
 it('Generate 10x10 matrix with info if a square is hit & the ship it contains', () => {
   const gameBoard = Gameboard();
