@@ -29,8 +29,8 @@ const Player = () => {
 
 //return random number from 0 to 9
 const chooseRandomNo = () => {
-  let num = (Math.random() * 10).toPrecision(1);
-  while (num > 9) num = (Math.random() * 10).toPrecision(1);
+  let num = parseInt(Math.round((Math.random() * 10).toPrecision(1)));
+  while (num > 9) num = parseInt(Math.round((Math.random() * 10).toPrecision(1)));
   return num;
 }
 
