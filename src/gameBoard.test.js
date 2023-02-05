@@ -12,7 +12,7 @@ it('Generate 10x10 matrix with info if a square is hit & the ship it contains', 
 });
 
 //same type of logic used when inserting down, left and up, should work the same
-it('Ship insertion-right: Ship object present in cells once inserted at [0][0]', () => {
+it('Ship insertion: Ship object present in cells once inserted at [0][0]', () => {
   const hit = expect.any(Function);
   const isSunk = expect.any(Function);  
 
@@ -38,7 +38,7 @@ it('Ship insertion-right: Ship object present in cells once inserted at [0][0]',
   }
 });
 
-it('Ship insertion-right: Dont populate board if ship goes out of board bounds', () => {
+it('Ship insertion: Dont populate board if ship goes out of board bounds', () => {
   const gameBoard = Gameboard();
   gameBoard.insertShipRight(0, 8, 'cruiser');
 
@@ -93,3 +93,29 @@ it('Record ship as sunk after each of its squares are hit', () => {
   
   expect(gameBoard.ships.cruiser.sunk).toBe(true);
 });
+
+it('Check if all ships are placed by the player', () => {
+  let shipsArePlaced = false;
+  const gameBoard = Gameboard();
+  shipsArePlaced = gameBoard.shipsAreReady();
+  
+  expect(shipsArePlaced).toBe(false);
+
+  gameBoard.insertShipRight(0, 0, 'cruiser');
+  gameBoard.insertShipRight(1, 0, 'battleship');
+  gameBoard.insertShipRight(2, 0, 'carrier');
+  gameBoard.insertShipRight(3, 0, 'submarine');
+  gameBoard.insertShipRight(4, 0, 'destroyer');
+  shipsArePlaced = gameBoard.shipsAreReady();
+
+  expect(shipsArePlaced).toBe(true);
+});
+
+it('Cant insert same ship twice', () => {
+  const gameBoard = Gameboard();
+  gameBoard.insertShipRight(0, 0, 'cruiser');
+  gameBoard.insertShipRight(1, 0, 'cruiser');
+
+  expect(gameBoard.board[1][0]).toMatchObject({hit: null, ship: null});
+});
+
