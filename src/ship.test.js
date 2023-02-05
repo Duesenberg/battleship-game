@@ -8,6 +8,7 @@ it("Factory function 'Ship' returns expected object", () => {
     length: 3,
     hits: 0,
     sunk: false,
+    placed: false,
     hit,
     isSunk
   };

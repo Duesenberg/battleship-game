@@ -36,6 +36,7 @@ const Ship = (shipType) => {
     length,
     hits: 0,
     sunk: false,
+    placed: false,
     hit,
     isSunk
   }
