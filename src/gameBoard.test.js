@@ -49,7 +49,7 @@ it('Ship insertion: Dont populate board if ship goes out of board bounds', () =>
   };  
 })
 
-it('Record a hit on board when a square with a ship is attacked', () => {
+it('Record a hit on board when a square with a ship is receiveAttacked', () => {
   const gameBoard = Gameboard();
   gameBoard.insertShipRight(0, 0, 'cruiser');
   gameBoard.receiveAttack(0, 0);
@@ -57,7 +57,7 @@ it('Record a hit on board when a square with a ship is attacked', () => {
   expect(gameBoard.board[0][0].hit).toBe(true);
 });
 
-it('Record a miss on board when a square without a ship is attacked', () => {
+it('Record a miss on board when a square without a ship is receiveAttacked', () => {
   const gameBoard = Gameboard();
   gameBoard.insertShipRight(0, 0, 'cruiser');
   gameBoard.receiveAttack(0, 3);
@@ -117,5 +117,39 @@ it('Cant insert same ship twice', () => {
   gameBoard.insertShipRight(1, 0, 'cruiser');
 
   expect(gameBoard.board[1][0]).toMatchObject({hit: null, ship: null});
+});
+
+it('Check if all ships on player game board are sunk', () => {
+  let allShipsSunk;
+  const gameBoard = Gameboard();
+  gameBoard.insertShipRight(0, 0, 'cruiser');
+  gameBoard.insertShipRight(1, 0, 'battleship');
+  gameBoard.insertShipRight(2, 0, 'destroyer');
+  gameBoard.insertShipRight(3, 0, 'carrier');
+  gameBoard.insertShipRight(4, 0, 'submarine');
+
+  allShipsSunk = gameBoard.allShipsSunk();
+  expect(allShipsSunk).toBe(false);
+
+  gameBoard.receiveAttack(0, 0);
+  gameBoard.receiveAttack(0, 1);
+  gameBoard.receiveAttack(0, 2);
+  gameBoard.receiveAttack(1, 0);
+  gameBoard.receiveAttack(1, 1);
+  gameBoard.receiveAttack(1, 2);
+  gameBoard.receiveAttack(1, 3);
+  gameBoard.receiveAttack(2, 0);
+  gameBoard.receiveAttack(2, 1);
+  gameBoard.receiveAttack(3, 0);
+  gameBoard.receiveAttack(3, 1);
+  gameBoard.receiveAttack(3, 2);
+  gameBoard.receiveAttack(3, 3);
+  gameBoard.receiveAttack(3, 4);
+  gameBoard.receiveAttack(4, 0);
+  gameBoard.receiveAttack(4, 1);
+  gameBoard.receiveAttack(4, 2);
+
+  allShipsSunk = gameBoard.allShipsSunk();
+  expect(allShipsSunk).toBe(true);
 });
 

@@ -73,6 +73,7 @@ const Gameboard = () => {
       this.board[row][column].hit = false;
   };
 
+  //check if all ships are placed on game board
   const shipsAreReady = function () {
     const ships = this.ships;
   
@@ -80,6 +81,18 @@ const Gameboard = () => {
       ships.cruiser.placed === true && ships.submarine.placed === true &&
       ships.destroyer.placed === true) 
         return true;
+    else return false;
+  }
+
+  //check if all ships on game board are sunk (yes-true/no-false)
+  const allShipsSunk = function () {
+    let sunkShips = 0;
+
+    for(const ship in this.ships) {
+      if(this.ships[ship].sunk === true) sunkShips += 1;
+    }
+
+    if (sunkShips === 5) return true;
     else return false;
   }
 
@@ -97,7 +110,8 @@ const Gameboard = () => {
     insertShipLeft,
     insertShipUp,
     receiveAttack,
-    shipsAreReady
+    shipsAreReady,
+    allShipsSunk
   }
 };
 
