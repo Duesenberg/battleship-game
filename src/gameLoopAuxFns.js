@@ -1,5 +1,5 @@
-import { Player } from "./player";
-import { chooseRandomNo } from "./player";
+import { Player, chooseRandomNo } from "./player";
+import { Gameboard } from "./gameBoard";
 
 //create an object with two players
 const CreatePlayers = () => {
@@ -40,10 +40,39 @@ const updateScore = (roundWinner, pScores) => {
 }
 
 //check whether all ships of either player are sunk (return true) or not (false)
-const roundOver = () => {
-  
+const roundOver = (playerOneBoard, playerTwoBoard) => {
+  if(playerOneBoard.allShipsSunk() === true ||
+  playerTwoBoard.allShipsSunk() === true)
+    return true;
+  else return false;
+}
+
+//returns 1 or 2 depending on which player won
+const determineRoundWinner = (playerOneBoard, playerTwoBoard) => {
+  let roundWinner;
+
+  if(playerOneBoard.allShipsSunk() === true) roundWinner = 2;
+  else if(playerTwoBoard.allShipsSunk() === true) roundWinner = 1;
+
+  return roundWinner;
+}
+
+//returns true after 5 rounds
+const gameOver = (roundNumber) => {
+  if (roundNumber > 5) return true;
+  else return false;
+}
+
+//returns 1 or 2 depending on which player's score is higher
+const determineGameWinner = (playerScores) => {
+  let winner;
+
+  playerScores[0] > playerScores[1] ? winner = 1 : winner = 2;
+
+  return winner;
 }
 
 export { CreatePlayers, clearObject, updateRound, updateScore, 
-  createScoresArray
+  createScoresArray, roundOver, determineRoundWinner, gameOver,
+  determineGameWinner,
 };
