@@ -18,7 +18,7 @@ const clearObject = (object) => {
     if (object.hasOwnProperty(variableKey)){
         delete object[variableKey];
     }
-}
+  }
 }
 
 //increase round number. roundNumber should be a variable available 
@@ -70,6 +70,14 @@ const determineGameWinner = (playerScores) => {
   playerScores[0] > playerScores[1] ? winner = 1 : winner = 2;
 
   return winner;
+}
+
+//change the player turn (can be 1 or 2)
+const changeTurn = (playerTurn) => {
+  if (playerTurn === 1) playerTurn = 2;
+  else playerTurn = 1;
+
+  return playerTurn;
 }
 
 export { CreatePlayers, clearObject, updateRound, updateScore, 
