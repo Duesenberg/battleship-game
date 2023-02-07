@@ -8,4 +8,5 @@ module.exports = {
     '\\.(css|less)$': '<rootDir>/__mocks__/styleMock.js',
     '^config$': '<rootDir>/configs/app-config.js',
   },
+  testEnvironment: 'jsdom',
 };
