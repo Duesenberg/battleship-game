@@ -1,133 +1,147 @@
-import { CreatePlayers, clearObject, updateRound, updateScore, 
-  createScoresArray, roundOver, determineRoundWinner, gameOver,
-  determineGameWinner,
+import { clearObject, updateRound, updateScore, 
+  roundOver, determineRoundWinner, gameOver,
+  determineGameWinner, GenerateGameData, setShipType, setShipDirection 
 }
   from "./gameLoopAuxFns";
 import { Player } from "./player";
 
-it('Can remove players with clearObject fn', () => {
-  let players = CreatePlayers();
-  clearObject(players);
+it('Can remove game data with clearObject fn', () => {
+  let gameData = GenerateGameData();
+  clearObject(gameData);
   
-  expect(players).toMatchObject({});
+  expect(gameData).toMatchObject({});
 });
 
-it('Can add players again after removing them once', () => {
-  let players = CreatePlayers();
-  clearObject(players);
-  players = CreatePlayers();
+it('Can add game data again after removing once', () => {
+  let gameData = GenerateGameData();
+  clearObject(gameData);
+  gameData = GenerateGameData();
 
-  expect(players.player1).not.toBe(undefined);
-  expect(players.player2).not.toBe(undefined);
+  expect(gameData.player1).not.toBe(undefined);
+  expect(gameData.player2).not.toBe(undefined);
+  expect(gameData.round).not.toBe(undefined);
+  expect(gameData.score).not.toBe(undefined);
+  expect(gameData.roundWinner).not.toBe(undefined);
+  expect(gameData.roundIsOver).not.toBe(undefined);
+  expect(gameData.gameIsOver).not.toBe(undefined);
+  expect(gameData.gameWinner).not.toBe(undefined);
+  expect(gameData.shipPlacement).not.toBe(undefined);
 });
 
 it('Increase round number', () => {
-  let roundNumber = 1;
-  roundNumber = updateRound(roundNumber);
-  roundNumber = updateRound(roundNumber);
+  let gameData = GenerateGameData();
+  gameData.round = updateRound(gameData.round);
+  gameData.round = updateRound(gameData.round);
 
-  expect(roundNumber).toBe(3);
+  expect(gameData.round).toBe(3);
 });
 
 it('Increase player score depending on who is the winner', () => {
-  let playerScores = [0, 0];
-  let roundWinner = 1;
-  updateScore(roundWinner, playerScores);
-  expect(playerScores[0]).toBe(1);
-  expect(playerScores[1]).toBe(0);
-  roundWinner = 2;
-  updateScore(roundWinner, playerScores);
-  expect(playerScores[0]).toBe(1);
-  expect(playerScores[1]).toBe(1);
+  let gameData = GenerateGameData();
+  gameData.roundWinner = 1;
+  updateScore(gameData.roundWinner, gameData.score);
+  expect(gameData.score[0]).toBe(1);
+  expect(gameData.score[1]).toBe(0);
+  gameData.roundWinner = 2;
+  updateScore(gameData.roundWinner, gameData.score);
+  expect(gameData.score[0]).toBe(1);
+  expect(gameData.score[1]).toBe(1);
 });
 
 it('Round is over when all ships of either player are sunk', () => {
-  let player1 = Player();
-  let player2 = Player();
-  player1.gameBoard.insertShipRight(0, 0, 'cruiser');
-  player1.gameBoard.insertShipRight(1, 0, 'battleship');
-  player1.gameBoard.insertShipRight(2, 0, 'destroyer');
-  player1.gameBoard.insertShipRight(3, 0, 'carrier');
-  player1.gameBoard.insertShipRight(4, 0, 'submarine');
-  let roundIsOver;
+  let gameData = GenerateGameData();
+  gameData.player1.gameBoard.insertShipRight(0, 0, 'cruiser');
+  gameData.player1.gameBoard.insertShipRight(1, 0, 'battleship');
+  gameData.player1.gameBoard.insertShipRight(2, 0, 'destroyer');
+  gameData.player1.gameBoard.insertShipRight(3, 0, 'carrier');
+  gameData.player1.gameBoard.insertShipRight(4, 0, 'submarine');
 
-  roundIsOver = roundOver(player1.gameBoard, player2.gameBoard);
+  gameData.roundIsOver = roundOver(gameData.player1.gameBoard, gameData.player2.gameBoard);
   
-  expect(roundIsOver).toBe(false);
+  expect(gameData.roundIsOver).toBe(false);
   
-  player2.attack(0, 0, player1);
-  player2.attack(0, 1, player1);
-  player2.attack(0, 2, player1);
-  player2.attack(1, 0, player1);
-  player2.attack(1, 1, player1);
-  player2.attack(1, 2, player1);
-  player2.attack(1, 3, player1);
-  player2.attack(2, 0, player1);
-  player2.attack(2, 1, player1);
-  player2.attack(3, 0, player1);
-  player2.attack(3, 1, player1);
-  player2.attack(3, 2, player1);
-  player2.attack(3, 3, player1);
-  player2.attack(3, 4, player1);
-  player2.attack(4, 0, player1);
-  player2.attack(4, 1, player1);
-  player2.attack(4, 2, player1);
-  roundIsOver = roundOver(player1.gameBoard, player2.gameBoard);
+  gameData.player2.attack(0, 0, gameData.player1);
+  gameData.player2.attack(0, 1, gameData.player1);
+  gameData.player2.attack(0, 2, gameData.player1);
+  gameData.player2.attack(1, 0, gameData.player1);
+  gameData.player2.attack(1, 1, gameData.player1);
+  gameData.player2.attack(1, 2, gameData.player1);
+  gameData.player2.attack(1, 3, gameData.player1);
+  gameData.player2.attack(2, 0, gameData.player1);
+  gameData.player2.attack(2, 1, gameData.player1);
+  gameData.player2.attack(3, 0, gameData.player1);
+  gameData.player2.attack(3, 1, gameData.player1);
+  gameData.player2.attack(3, 2, gameData.player1);
+  gameData.player2.attack(3, 3, gameData.player1);
+  gameData.player2.attack(3, 4, gameData.player1);
+  gameData.player2.attack(4, 0, gameData.player1);
+  gameData.player2.attack(4, 1, gameData.player1);
+  gameData.player2.attack(4, 2, gameData.player1);
+  gameData.roundIsOver = roundOver(gameData.player1.gameBoard, gameData.player2.gameBoard);
 
-  expect(roundIsOver).toBe(true);
+  expect(gameData.roundIsOver).toBe(true);
 });
 
 it('Determine the winner after round is over', () => {
-  let player1 = Player();
-  let player2 = Player();
-  let roundIsOver;
-  let roundWinner;
+  let gameData = GenerateGameData();
 
-  player1.gameBoard.insertShipRight(0, 0, 'cruiser');
-  player1.gameBoard.insertShipRight(1, 0, 'battleship');
-  player1.gameBoard.insertShipRight(2, 0, 'destroyer');
-  player1.gameBoard.insertShipRight(3, 0, 'carrier');
-  player1.gameBoard.insertShipRight(4, 0, 'submarine');
-  player2.attack(0, 0, player1);
-  player2.attack(0, 1, player1);
-  player2.attack(0, 2, player1);
-  player2.attack(1, 0, player1);
-  player2.attack(1, 1, player1);
-  player2.attack(1, 2, player1);
-  player2.attack(1, 3, player1);
-  player2.attack(2, 0, player1);
-  player2.attack(2, 1, player1);
-  player2.attack(3, 0, player1);
-  player2.attack(3, 1, player1);
-  player2.attack(3, 2, player1);
-  player2.attack(3, 3, player1);
-  player2.attack(3, 4, player1);
-  player2.attack(4, 0, player1);
-  player2.attack(4, 1, player1);
-  player2.attack(4, 2, player1);
-  roundIsOver = roundOver(player1.gameBoard, player2.gameBoard);
+  gameData.player1.gameBoard.insertShipRight(0, 0, 'cruiser');
+  gameData.player1.gameBoard.insertShipRight(1, 0, 'battleship');
+  gameData.player1.gameBoard.insertShipRight(2, 0, 'destroyer');
+  gameData.player1.gameBoard.insertShipRight(3, 0, 'carrier');
+  gameData.player1.gameBoard.insertShipRight(4, 0, 'submarine');
+  gameData.player2.attack(0, 0, gameData.player1);
+  gameData.player2.attack(0, 1, gameData.player1);
+  gameData.player2.attack(0, 2, gameData.player1);
+  gameData.player2.attack(1, 0, gameData.player1);
+  gameData.player2.attack(1, 1, gameData.player1);
+  gameData.player2.attack(1, 2, gameData.player1);
+  gameData.player2.attack(1, 3, gameData.player1);
+  gameData.player2.attack(2, 0, gameData.player1);
+  gameData.player2.attack(2, 1, gameData.player1);
+  gameData.player2.attack(3, 0, gameData.player1);
+  gameData.player2.attack(3, 1, gameData.player1);
+  gameData.player2.attack(3, 2, gameData.player1);
+  gameData.player2.attack(3, 3, gameData.player1);
+  gameData.player2.attack(3, 4, gameData.player1);
+  gameData.player2.attack(4, 0, gameData.player1);
+  gameData.player2.attack(4, 1, gameData.player1);
+  gameData.player2.attack(4, 2, gameData.player1);
+  gameData.roundIsOver = roundOver(gameData.player1.gameBoard, gameData.player2.gameBoard);
 
-  roundWinner = determineRoundWinner(player1.gameBoard, player2.gameBoard);
-  expect(roundWinner).toBe(2);
+  gameData.roundWinner = determineRoundWinner(gameData.player1.gameBoard, gameData.player2.gameBoard);
+  expect(gameData.roundWinner).toBe(2);
 });
 
 it('Game is over after fifth round', () => {
-  let roundNumber = 5;
-  let isGameOver;
+  let gameData = GenerateGameData();
   
-  isGameOver = gameOver(roundNumber);
-  expect(isGameOver).toBe(false);
+  gameData.gameIsOver = gameOver(gameData.round);
+  expect(gameData.gameIsOver).toBe(false);
 
-  roundNumber = updateRound(roundNumber);
+  gameData.round = updateRound(gameData.round);
+  gameData.round = updateRound(gameData.round);
+  gameData.round = updateRound(gameData.round);
+  gameData.round = updateRound(gameData.round);
+  gameData.round = updateRound(gameData.round);
 
-  isGameOver = gameOver(roundNumber);
-  expect(isGameOver).toBe(true);
+  gameData.gameIsOver = gameOver(gameData.round);
+  expect(gameData.gameIsOver).toBe(true);
 });
 
 it('Determine winner after game is over', () => {
-  let gameWinner;
-  let playerScores = [2, 3];
+  let gameData = GenerateGameData();
+  gameData.score = [2, 3];
 
-  gameWinner = determineGameWinner(playerScores);
-  expect(gameWinner).toBe(2);
+  gameData.gameWinner = determineGameWinner(gameData.score);
+  expect(gameData.gameWinner).toBe(2);
+})
+
+it('changes selected ship & placement direction successfully', () => {
+  let gameData = GenerateGameData();
+
+  gameData.shipPlacement[0] = setShipType('destroyer');
+  gameData.shipPlacement[1] = setShipDirection('up');
+
+  expect(gameData.shipPlacement).toStrictEqual(['destroyer', 'up']);
 })

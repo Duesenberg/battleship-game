@@ -1,14 +1,18 @@
 import { Player, chooseRandomNo } from "./player";
 import { Gameboard } from "./gameBoard";
 
-//create an object with two players
-const CreatePlayers = () => {
-  const player1 = Player();
-  const player2 = Player();
-
+//generate object containing game data
+const GenerateGameData = () => {
   return {
-    player1,
-    player2
+    player1: Player(),
+    player2: Player(),
+    round: 1,
+    score: [0, 0],
+    roundIsOver: false,
+    gameIsOver: false,
+    roundWinner: null,
+    gameWinner: null,
+    shipPlacement: ['carrier', 'right']
   }
 }
 
@@ -23,11 +27,10 @@ const clearObject = (object) => {
 
 //increase round number. roundNumber should be a variable available 
 //in entire game loop.
-const updateRound = (roundNumber) => roundNumber += 1;
+const updateRound = (roundNumber) => {
+  return roundNumber += 1;
+} 
 
-const createScoresArray = () => {
-  return [0, 0];
-}
 //update score. playerScores should be object available in entire game loop.
 //in player one wins, roundWinner is 1. else roundWinner is 2
 const updateScore = (roundWinner, pScores) => {
@@ -80,7 +83,12 @@ const changeTurn = (playerTurn) => {
   return playerTurn;
 }
 
-export { CreatePlayers, clearObject, updateRound, updateScore, 
-  createScoresArray, roundOver, determineRoundWinner, gameOver,
-  determineGameWinner,
-};
+//set ship type for placement
+const setShipType = (ship) => ship;
+
+//set ship direction for placement
+const setShipDirection = (direction) => direction;
+
+export { clearObject, updateRound, updateScore, 
+  roundOver, determineRoundWinner, gameOver,
+  determineGameWinner, GenerateGameData, setShipType, setShipDirection };
