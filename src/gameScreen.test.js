@@ -1,6 +1,6 @@
 import { gameScreen } from "./gameScreen";
 import { placeShipsScreen } from "./placeShipsScreen";
-import { welcomeScreen } from "./welcomeScreen";
+import { welcomeScreenContent } from "./welcomeScreen";
 
 describe('game screen', () => {
   document.body.innerHTML = 
@@ -8,8 +8,8 @@ describe('game screen', () => {
     `</div>`;
 
   it('generates game screen', () => {
-    welcomeScreen();
-    placeShipsScreen();
+    welcomeScreenContent();
+    placeShipsScreenContent();
     gameScreen();
 
     expect(document.body.innerHTML).toBe(

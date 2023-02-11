@@ -2,8 +2,8 @@ import {selectDOMel, selectDOMelAll, insertDOMel,
   removeAllChildNodes} 
   from "./auxFnsDOM";
 import { CreatePlayers, clearObject, updateRound, updateScore, 
-  createScoresArray, roundOver, determineRoundWinner, gameOver,
-  determineGameWinner, generateGameData }
+  roundOver, determineRoundWinner, gameOver,
+  determineGameWinner, GenerateGameData }
   from "./gameLoopAuxFns";
 import { Gameboard } from "./gameBoard";
 import { Player, chooseRandomNo } from "./player";
