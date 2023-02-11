@@ -1,21 +1,36 @@
-import {selectDOMel, selectDOMelAll, insertDOMel} from "./auxFnsDOM";
+import {selectDOMel, selectDOMelAll, insertDOMel, 
+  removeAllChildNodes} 
+  from "./auxFnsDOM";
+import { CreatePlayers, clearObject, updateRound, updateScore, 
+  createScoresArray, roundOver, determineRoundWinner, gameOver,
+  determineGameWinner, generateGameData }
+  from "./gameLoopAuxFns";
+import { Gameboard } from "./gameBoard";
+import { Player, chooseRandomNo } from "./player";
+import { Ship } from "./ship";
+import { generatePlaceShipsScreen } from "./placeShipsScreen";
 
-//generate the welcome screen
-const welcomeScreen = () => {
+//generate the welcome screen content
+const welcomeScreenContent = () => {
   const container = selectDOMel('#container');
-  const welcomeScreen = insertDOMel('div', container);
-  const gameTitle = insertDOMel('h1', welcomeScreen);
-  const startGameButton = insertDOMel('button', welcomeScreen);
-  const soundButton = insertDOMel('button', welcomeScreen);
 
-  welcomeScreen.classList.add('welcome-screen');
-  gameTitle.classList.add('game-title');
-  startGameButton.classList.add('start-game');
-  soundButton.classList.add('sound-button');
+  removeAllChildNodes(container);//clear #container of all children
 
-  gameTitle.textContent = 'BATTLESHIP';
-  startGameButton.textContent = 'Start';
-
+  const welcomeScreen = insertDOMel('div', container, 'welcome-screen');
+  const gameTitle = insertDOMel('h1', welcomeScreen, 'game-title', 'BATTLESHIP');
+  const startGameButton = insertDOMel('button', welcomeScreen, 'start-game', 'Start');
+  const soundButton = insertDOMel('button', welcomeScreen, 'sound-button');
 }
 
-export {welcomeScreen};
+//add event listener after gen. screen content as well
+const generateWelcomeScreen = () => {
+  welcomeScreenContent();
+
+  const startGameButton = document.querySelector('.start-game');
+
+  startGameButton.addEventListener('click', () => {
+    generatePlaceShipsScreen();//generate next screen, for placing ships
+  });
+}
+
+export { welcomeScreenContent, generateWelcomeScreen };
