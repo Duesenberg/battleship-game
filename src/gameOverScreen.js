@@ -17,6 +17,7 @@ const gameOverScreen = () => {
   const pTwoImage = insertDOMel('img', playerTwoAvatar, 'image');
   const midDivText = insertDOMel('p', middleDiv, 'text', 'Game Over!');
   const winnerText = insertDOMel('p', middleDiv, 'winner');
+  const restartButton = insertDOMel('button', middleDiv, 'restart-game', 'Restart?');
 }
 
 export {gameOverScreen};

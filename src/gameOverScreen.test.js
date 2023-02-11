@@ -23,6 +23,7 @@ describe('game over screen', () => {
           '<div class="middle-div">' +
             '<p class="text">Game Over!</p>' +
             '<p class="winner"></p>' +
+            '<button class="restart-game">Restart?</button>' +
           '</div>' +
           '<div class="avatar-two">' +
             '<img class="image">' +
