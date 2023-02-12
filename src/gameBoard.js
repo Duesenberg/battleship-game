@@ -17,6 +17,15 @@ const Gameboard = () => {
     return board;
   }
 
+  //clear the board
+  const clearBoard = function () {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        this.board[i][j] = {hit: null, ship: null};
+      }
+    }
+  }
+
   //insert ship to the right starting at specified row & column.
   //accepts ship type as well
   //only insert if square is empty and if ship type has not been entered before
@@ -60,6 +69,14 @@ const Gameboard = () => {
       this.ships[`${this.board[row][column].ship}`].placed = true;
     }
   };
+
+  //places a ship of the selected type & in the selected direction
+  const placeSelectedShip = function (row, column, shipType, shipDirection) {
+    if (shipDirection === 'right') this.insertShipRight(row, column, shipType);
+    else if (shipDirection === 'down') this.insertShipDown(row, column, shipType);
+    else if (shipDirection === 'left') this.insertShipLeft(row, column, shipType);
+    else if (shipDirection === 'up') this.insertShipUp(row, column, shipType);
+  }
 
   //register a hit or miss on board square. if ship is hit, add a hit to it.
   //if a ship is hit, check if it is sunk
@@ -111,7 +128,9 @@ const Gameboard = () => {
     insertShipUp,
     receiveAttack,
     shipsAreReady,
-    allShipsSunk
+    allShipsSunk,
+    placeSelectedShip,
+    clearBoard
   }
 };
 

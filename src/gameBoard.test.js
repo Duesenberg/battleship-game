@@ -38,6 +38,25 @@ it('Ship insertion: Ship object present in cells once inserted at [0][0]', () =>
   }
 });
 
+it('can clear the board of all placed ships', () => {
+  const gameBoard = Gameboard();
+  gameBoard.insertShipRight(0, 0, 'cruiser');
+  const boardPiece = {
+    hit: null,
+    ship: 'cruiser'
+  };
+  
+  expect(gameBoard.board[0][0]).toMatchObject(boardPiece);
+  expect(gameBoard.board[0][1]).toMatchObject(boardPiece);
+  expect(gameBoard.board[0][2]).toMatchObject(boardPiece);
+
+  gameBoard.clearBoard();
+
+  expect(gameBoard.board[0][0]).toMatchObject({hit: null, ship: null});
+  expect(gameBoard.board[0][1]).toMatchObject({hit: null, ship: null});
+  expect(gameBoard.board[0][2]).toMatchObject({hit: null, ship: null});
+});
+
 it('Ship insertion: Dont populate board if ship goes out of board bounds', () => {
   const gameBoard = Gameboard();
   gameBoard.insertShipRight(0, 8, 'cruiser');
@@ -151,5 +170,40 @@ it('Check if all ships on player game board are sunk', () => {
 
   allShipsSunk = gameBoard.allShipsSunk();
   expect(allShipsSunk).toBe(true);
+});
+
+it('places ship in the selected direction', () => {
+  const gameBoard = Gameboard();
+  const boardPiece = {
+    hit: null,
+    ship: 'cruiser'
+  };
+  gameBoard.placeSelectedShip(0, 0, 'cruiser', 'right');
+  
+  expect(gameBoard.board[0][0]).toMatchObject(boardPiece);
+  expect(gameBoard.board[0][1]).toMatchObject(boardPiece);
+  expect(gameBoard.board[0][2]).toMatchObject(boardPiece);
+});
+
+it('doesnt place ship if out of bounds', () => {
+  const gameBoard = Gameboard();
+  gameBoard.placeSelectedShip(0, 8, 'cruiser', 'right');
+
+  expect(gameBoard.board[0][8]).toMatchObject({hit: null, ship: null});
+  expect(gameBoard.board[0][9]).toMatchObject({hit: null, ship: null});
+});
+
+it('doesnt place ship if square is populated', () => {
+  const gameBoard = Gameboard();
+  gameBoard.placeSelectedShip(0, 0, 'cruiser', 'right');
+  gameBoard.placeSelectedShip(0, 0, 'cruiser', 'down');
+  const boardPiece = {
+    hit: null,
+    ship: 'cruiser'
+  };
+
+  expect(gameBoard.board[0][0]).toMatchObject(boardPiece);
+  expect(gameBoard.board[1][0]).toMatchObject({hit: null, ship: null});
+  expect(gameBoard.board[2][0]).toMatchObject({hit: null, ship: null});
 });
 
