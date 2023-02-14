@@ -95,6 +95,7 @@ const placeShipsScreenEventListeners = () => {
   const boardSquares = document.querySelectorAll('.board-square');
 
   //listeners for ship buttons
+  //add pressed class to button, remove it from others. also call setShipType
   carrier.addEventListener('click', () => {
     setShipType(carrier.value);
     carrier.classList.add('pressed');

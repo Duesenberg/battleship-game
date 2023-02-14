@@ -1,6 +1,6 @@
 import { gameScreen } from "./gameScreen";
-import { placeShipsScreen } from "./placeShipsScreen";
-import { welcomeScreen } from "./welcomeScreen";
+import { placeShipsScreenContent } from "./placeShipsScreen";
+import { welcomeScreenContent } from "./welcomeScreen";
 import { gameOverScreen } from "./gameOverScreen";
 
 describe('game over screen', () => {
@@ -9,8 +9,8 @@ describe('game over screen', () => {
     `</div>`;
 
   it('generates game over screen', () => {
-    welcomeScreen();
-    placeShipsScreen();
+    welcomeScreenContent();
+    placeShipsScreenContent();
     gameScreen();
     gameOverScreen();
 

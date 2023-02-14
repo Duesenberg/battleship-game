@@ -1,7 +1,7 @@
 import {selectDOMel, selectDOMelAll, insertDOMel, 
   removeAllChildNodes} 
   from "./auxFnsDOM";
-import { CreatePlayers, clearObject, updateRound, updateScore, 
+import { clearObject, updateRound, updateScore, 
   roundOver, determineRoundWinner, gameOver,
   determineGameWinner, GenerateGameData }
   from "./gameLoopAuxFns";

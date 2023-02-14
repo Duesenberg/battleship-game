@@ -1,5 +1,5 @@
 import { gameScreen } from "./gameScreen";
-import { placeShipsScreen } from "./placeShipsScreen";
+import { placeShipsScreenContent } from "./placeShipsScreen";
 import { welcomeScreenContent } from "./welcomeScreen";
 
 describe('game screen', () => {
