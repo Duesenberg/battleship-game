@@ -1,15 +1,3 @@
-//select element
-const selectDOMel = (selector) => {
-  const el = document.querySelector(selector);
-  return el;
-}
-
-//create node list
-const selectDOMelAll = (selector) => {
-  const el = document.querySelectorAll(selector);
-  return el;
-}
-
 //create and append element to parent
 const insertDOMel = (element, parent, cls, textContent) => {
   const el = document.createElement(element);
@@ -30,4 +18,4 @@ const removeAllChildNodes = (parent) => {
   }
 }
 
-export {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes};
+export {insertDOMel, removeAllChildNodes};
