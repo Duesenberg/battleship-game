@@ -1,5 +1,5 @@
 import { placeShipsScreenContent, generatePlaceShipsScreen, placeShipsScreenEventListeners,
-  markBoardSquares, eraseShipsFromBoard } from "./placeShipsScreen";
+  markBoardSquares, eraseShipsFromBoard, togglePressedClass } from "./placeShipsScreen";
 import { welcomeScreenContent } from "./welcomeScreen";
 
 describe('place ships screen', () => {
@@ -50,14 +50,26 @@ describe('place ships screen', () => {
   });
 });
 
+//i mocked the event listeners here, because there were issues recognizing some
+//of the DOM functions
 describe('test event listeners', () => {
   document.body.innerHTML = `<div id="container"></div>`;
   placeShipsScreenContent();
-  placeShipsScreenEventListeners();
+
+  //selecting needed DOM elements
+  const carrier = document.querySelector('.carrier-button');
+  const battleship = document.querySelector('.battleship-button');
+  const cruiser = document.querySelector('.cruiser-button');
+  const submarine = document.querySelector('.submarine-button');
+  const destroyer = document.querySelector('.destroyer-button');
+  const upArrow = document.querySelector('.arrow-up');
+  const downArrow = document.querySelector('.arrow-down');
+  const leftArrow = document.querySelector('.arrow-left');
+  const rightArrow = document.querySelector('.arrow-right');
 
   //dummy fns and methods that are called with the event listeners
-  const setShipType = () => {};
-  const setShipDirection = () => {};
+  const setShipType = jest.fn();
+  const setShipDirection = jest.fn();
   const gameData = {
     shipPlacement: [0, 0],
     player1: {
@@ -73,32 +85,53 @@ describe('test event listeners', () => {
   }
 
   it('changes ship button classes as expected when ships buttons pressed', () => {
-    const carrier = document.querySelector('.carrier-button');
-    const battleship = document.querySelector('.battleship-button');
-    const cruiser = document.querySelector('.cruiser-button');
-    const submarine = document.querySelector('.submarine-button');
-    const destroyer = document.querySelector('.destroyer-button');
+    carrier.addEventListener('click', () => {
+      togglePressedClass(carrier, battleship, cruiser, submarine, destroyer);
+    });
+    destroyer.addEventListener('click', () => {
+      togglePressedClass(destroyer, battleship, cruiser, submarine, carrier);
+    });
 
     carrier.click();
-    battleship.click();
-    cruiser.click();
-    submarine.click();
     destroyer.click();
-
     expect(carrier.className).toBe("carrier-button");
     expect(destroyer.className).toBe("destroyer-button pressed");
   });
 
-  it('calls the setShipType fn when ship buttons clicked', () => {
+  it('calls the setShipType fn when ship buttons clicked with expected arg', () => {
+    carrier.addEventListener('click', () => {
+      setShipType(carrier.value);
+      togglePressedClass(carrier, battleship, cruiser, submarine, destroyer);
+    })
 
+    carrier.click();
+    expect(setShipType).toHaveBeenCalledWith('carrier');
   });
 
   it('changes direction classes as expected when they are clicked', () => {
+    upArrow.addEventListener('click', () => {
+      togglePressedClass(upArrow, rightArrow, downArrow, leftArrow);
+    });
+    downArrow.addEventListener('click', () => {
+      togglePressedClass(downArrow, upArrow, rightArrow, leftArrow);
+    });
 
+    upArrow.click();
+    expect(upArrow.className).toBe('arrow-up pressed');
+    
+    downArrow.click();
+    expect(upArrow.className).toBe('arrow-up');
+    expect(downArrow.className).toBe('arrow-down pressed');
   });
 
   it('calls the setShipDirection fn when directions button clicked', () => {
+    upArrow.addEventListener('click', () => {
+      setShipDirection(upArrow.value);
+      togglePressedClass(upArrow, rightArrow, downArrow, leftArrow);
+    });
 
+    upArrow.click();
+    expect(setShipDirection).toHaveBeenCalledWith('up');
   });
 
   it('calls the placeSelectedShip method when a board square is clicked', () => {
