@@ -66,23 +66,18 @@ describe('test event listeners', () => {
   const downArrow = document.querySelector('.arrow-down');
   const leftArrow = document.querySelector('.arrow-left');
   const rightArrow = document.querySelector('.arrow-right');
+  const boardSquares = document.querySelectorAll('.board-square');
+  const eraseShips = document.querySelector('.clear-ships');
+  const finishPlacement = document.querySelector('.finish-button');
 
   //dummy fns and methods that are called with the event listeners
   const setShipType = jest.fn();
   const setShipDirection = jest.fn();
+  const placeSelectedShip = jest.fn();
   const gameData = {
-    shipPlacement: [0, 0],
-    player1: {
-      gameboard: {
-        placeSelectedShip: (row, column, shipType, shipDirection) => {},
-        clearBoard: () => {},
-        shipsAreReady: () => {}
-      }
-    }
+    shipPlacement: ['carrier', 'right'],
   }
-  const generateGameScreen = () => {
-    console.log('no hill for a stepper');
-  }
+  const generateGameScreen = jest.fn();
 
   it('changes ship button classes as expected when ships buttons pressed', () => {
     carrier.addEventListener('click', () => {
@@ -135,30 +130,66 @@ describe('test event listeners', () => {
   });
 
   it('calls the placeSelectedShip method when a board square is clicked', () => {
+    boardSquares.forEach(square => {
+      square.addEventListener('click', () => {
+        let row = parseInt(square.getAttribute('data-row'));
+        let column = parseInt(square.getAttribute('data-column'));
+        let shipType = gameData.shipPlacement[0];
+        let shipDirection = gameData.shipPlacement[1];
+  
+        placeSelectedShip(row, column, shipType, shipDirection);
+      });
+    });
 
+    for (let i = 0; i < 100;) {
+      boardSquares.forEach(square => {
+        ++i;
+        if (i === 11) square.click();
+      })
+    }
+
+    expect(placeSelectedShip)
+      .toHaveBeenCalledWith(1, 0, 'carrier', 'right');
   });
 
   it('calls the markBoardSquares function when a board square is clicked', () => {
+    const markBoardSquaresMock = jest.fn();
 
-  });
+    boardSquares.forEach(square => {
+      square.addEventListener('click', () => {
+        markBoardSquaresMock();
+      });
+    });
 
-  it('adds class of occupied for the squares that contain a ship when a board square is clicked', () => {
+    for (let i = 0; i < 100;) {
+      boardSquares.forEach(square => {
+        ++i;
+        if (i === 11) square.click();
+      })
+    }
 
+    expect(markBoardSquaresMock).toHaveBeenCalled();
   });
 
   it('calls the clearBoard method when clear button is clicked', () => {
+    const eraseShipsFromBoard = jest.fn();
 
-  });
+    eraseShips.addEventListener('click', () => {
+      eraseShipsFromBoard();
+    })
 
-  it('removes class of occupied from all board squares when clear button clicked', () => {
-
-  });
-
-  it('calls the shipsAreReady method once finish button is clicked', () => {
-
+    eraseShips.click();
+    expect(eraseShipsFromBoard).toHaveBeenCalled();
   });
 
   it('calls generateGameScreen when finish button is clicked', () => {
+    let shipsArePlaced = true;
 
+    finishPlacement.addEventListener('click', () => {
+      if (shipsArePlaced === true) generateGameScreen();
+    });
+
+    finishPlacement.click();
+    expect(generateGameScreen).toHaveBeenCalled();
   });
 });
