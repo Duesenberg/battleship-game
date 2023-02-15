@@ -80,6 +80,14 @@ const eraseShipsFromBoard = () => {
   gameData.player1.gameBoard.clearBoard();
 }
 
+//toggles pressed class. adds it to first parameter, removes it from rest
+const togglePressedClass = (pressedButton, ...otherButtons) => {
+  pressedButton.classList.add('pressed');
+  otherButtons.forEach(button => {
+    button.classList.remove('pressed');
+  })
+}
+
 //add event listeners to buttons and board squares
 const placeShipsScreenEventListeners = () => {
   //declaring elements
@@ -98,72 +106,40 @@ const placeShipsScreenEventListeners = () => {
   //add pressed class to button, remove it from others. also call setShipType
   carrier.addEventListener('click', () => {
     setShipType(carrier.value);
-    carrier.classList.add('pressed');
-    battleship.classList.remove('pressed');
-    cruiser.classList.remove('pressed');
-    submarine.classList.remove('pressed');
-    destroyer.classList.remove('pressed');
+    togglePressedClass(carrier, battleship, cruiser, submarine, destroyer);
   });
   battleship.addEventListener('click', () => {
     setShipType(battleship.value);
-    carrier.classList.remove('pressed');
-    battleship.classList.add('pressed');
-    cruiser.classList.remove('pressed');
-    submarine.classList.remove('pressed');
-    destroyer.classList.remove('pressed');
+    togglePressedClass(battleship, carrier, cruiser, submarine, destroyer);
   });
   cruiser.addEventListener('click', () => {
     setShipType(cruiser.value);
-    carrier.classList.remove('pressed');
-    battleship.classList.remove('pressed');
-    cruiser.classList.add('pressed');
-    submarine.classList.remove('pressed');
-    destroyer.classList.remove('pressed');
+    togglePressedClass(cruiser, battleship, carrier, submarine, destroyer);
   });
   submarine.addEventListener('click', () => {
     setShipType(submarine.value);
-    carrier.classList.remove('pressed');
-    battleship.classList.remove('pressed');
-    cruiser.classList.remove('pressed');
-    submarine.classList.add('pressed');
-    destroyer.classList.remove('pressed');
+    togglePressedClass(submarine, cruiser, battleship, carrier, destroyer);
   });
   destroyer.addEventListener('click', () => {
     setShipType(destroyer.value);
-    carrier.classList.remove('pressed');
-    battleship.classList.remove('pressed');
-    cruiser.classList.remove('pressed');
-    submarine.classList.remove('pressed');
-    destroyer.classList.add('pressed');
+    togglePressedClass(destroyer, submarine, cruiser, battleship, carrier);
   });
   //listeners for placement direction
   upArrow.addEventListener('click', () => {
     setShipDirection(upArrow.value);
-    upArrow.classList.add('pressed');
-    downArrow.classList.remove('pressed');
-    leftArrow.classList.remove('pressed');
-    rightArrow.classList.remove('pressed');
+    togglePressedClass(upArrow, downArrow, leftArrow, rightArrow);
   });
   downArrow.addEventListener('click', () => {
     setShipDirection(downArrow.value);
-    upArrow.classList.remove('pressed');
-    downArrow.classList.add('pressed');
-    leftArrow.classList.remove('pressed');
-    rightArrow.classList.remove('pressed');
+    togglePressedClass(downArrow, upArrow, leftArrow, rightArrow);
   });
   leftArrow.addEventListener('click', () => {
     setShipDirection(leftArrow.value);
-    upArrow.classList.remove('pressed');
-    downArrow.classList.remove('pressed');
-    leftArrow.classList.add('pressed');
-    rightArrow.classList.remove('pressed');
+    togglePressedClass(leftArrow, downArrow, upArrow, rightArrow);
   });
   rightArrow.addEventListener('click', () => {
     setShipDirection(rightArrow.value);
-    upArrow.classList.remove('pressed');
-    downArrow.classList.remove('pressed');
-    leftArrow.classList.remove('pressed');
-    rightArrow.classList.add('pressed');
+    togglePressedClass(rightArrow, leftArrow, downArrow, upArrow);
   });
 
   //listeners for board squares
@@ -209,4 +185,4 @@ const generatePlaceShipsScreen = () => {
 }
 
 export {placeShipsScreenContent, generatePlaceShipsScreen, placeShipsScreenEventListeners,
-  markBoardSquares, eraseShipsFromBoard};
+  markBoardSquares, eraseShipsFromBoard, togglePressedClass};
