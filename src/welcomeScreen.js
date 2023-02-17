@@ -1,5 +1,4 @@
-import {selectDOMel, selectDOMelAll, insertDOMel, 
-  removeAllChildNodes} 
+import {insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
 import { clearObject, updateRound, updateScore, 
   roundOver, determineRoundWinner, gameOver,
@@ -12,7 +11,7 @@ import { generatePlaceShipsScreen } from "./placeShipsScreen";
 
 //generate the welcome screen content
 const welcomeScreenContent = () => {
-  const container = selectDOMel('#container');
+  const container = document.querySelector('#container');
 
   removeAllChildNodes(container);//clear #container of all children
 
