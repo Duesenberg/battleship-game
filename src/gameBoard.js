@@ -19,11 +19,19 @@ const Gameboard = () => {
 
   //clear the board
   const clearBoard = function () {
+    //erase the ships from the board
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
         this.board[i][j] = {hit: null, ship: null};
       }
     }
+
+    //mark each ship as not placed
+    this.ships.carrier.placed = false;
+    this.ships.battleship.placed = false;
+    this.ships.cruiser.placed = false;
+    this.ships.submarine.placed = false;
+    this.ships.destroyer.placed = false;
   }
 
   //insert ship to the right starting at specified row & column.
@@ -31,7 +39,8 @@ const Gameboard = () => {
   //only insert if square is empty and if ship type has not been entered before
   const insertShipRight = function (row, column, shipType) {
     //insert ship object to right by number of length units(depending on type)
-    if (this.board[row][column + (Ship(shipType).length -1)] !== undefined
+    if (this.ships[`${shipType}`].placed === true) {}
+    else if (this.board[row][column + (Ship(shipType).length -1)] !== undefined
     && this.ships[`${shipType}`].placed === false) {
       for (let i = 0; i < Ship(shipType).length; i++) {
         this.board[row][column + i].ship = shipType;
@@ -41,7 +50,8 @@ const Gameboard = () => {
   };
 
   const insertShipDown = function (row, column, shipType) {
-    if (this.board[row + (Ship(shipType).length -1)][column] !== undefined
+    if (this.ships[`${shipType}`].placed === true) {}
+    else if (this.board[row + (Ship(shipType).length -1)][column] !== undefined
     && this.ships[`${shipType}`].placed === false) {
       for (let i = 0; i < Ship(shipType).length; i++) {
         this.board[row + i][column].ship = shipType;
@@ -51,7 +61,8 @@ const Gameboard = () => {
   };
 
   const insertShipLeft = function (row, column, shipType) {
-    if (this.board[row][column - (Ship(shipType).length -1)] !== undefined
+    if (this.ships[`${shipType}`].placed === true) {}
+    else if (this.board[row][column - (Ship(shipType).length -1)] !== undefined
     && this.ships[`${shipType}`].placed === false) {
       for (let i = 0; i < Ship(shipType).length; i++) {
         this.board[row][column - i].ship = shipType;
@@ -61,7 +72,8 @@ const Gameboard = () => {
   };
 
   const insertShipUp = function (row, column, shipType) {
-    if (this.board[row - (Ship(shipType).length -1)][column] !== undefined
+    if (this.ships[`${shipType}`].placed === true) {}
+    else if (this.board[row - (Ship(shipType).length -1)][column] !== undefined
     && this.ships[`${shipType}`].placed === false) {
       for (let i = 0; i < Ship(shipType).length; i++) {
         this.board[row - i][column].ship = shipType;
