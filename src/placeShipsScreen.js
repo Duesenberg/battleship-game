@@ -1,4 +1,4 @@
-import {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
+import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
 import { clearObject, updateRound, updateScore, 
   roundOver, determineRoundWinner, gameOver,
   determineGameWinner, GenerateGameData, setShipType, setShipDirection  }
@@ -6,7 +6,7 @@ import { clearObject, updateRound, updateScore,
 
 //create the content of the screen
 const placeShipsScreenContent = () => {
-  const container = selectDOMel('#container');
+  const container = document.querySelector('#container');
 
   removeAllChildNodes(container);//clear the welcome screen
 
@@ -60,22 +60,22 @@ const placeShipsScreenContent = () => {
 const markBoardSquares = () => {
   const boardSquares = document.querySelectorAll('.board-square');
 
-  for (let square in boardSquares) {
+  boardSquares.forEach(square => {
     let row = parseInt(square.getAttribute('data-row'));
     let column = parseInt(square.getAttribute('data-column'));
 
     if (gameData.player1.gameBoard.board[row][column].ship !== null)
       square.classList.add('occupied');
-  }
+  });
 }
 
 //remove the occupied class from the board squares & clear data from board
 const eraseShipsFromBoard = () => {
   const boardSquares = document.querySelectorAll('.board-square');
 
-  for (let square in boardSquares) {
+  boardSquares.forEach(square => {
     square.classList.remove('occupied');
-  }
+  })
 
   gameData.player1.gameBoard.clearBoard();
 }
@@ -105,45 +105,45 @@ const placeShipsScreenEventListeners = () => {
   //listeners for ship buttons
   //add pressed class to button, remove it from others. also call setShipType
   carrier.addEventListener('click', () => {
-    setShipType(carrier.value);
+    gameData.shipPlacement[0] = setShipType(carrier.value);
     togglePressedClass(carrier, battleship, cruiser, submarine, destroyer);
   });
   battleship.addEventListener('click', () => {
-    setShipType(battleship.value);
+    gameData.shipPlacement[0] = setShipType(battleship.value);
     togglePressedClass(battleship, carrier, cruiser, submarine, destroyer);
   });
   cruiser.addEventListener('click', () => {
-    setShipType(cruiser.value);
+    gameData.shipPlacement[0] = setShipType(cruiser.value);
     togglePressedClass(cruiser, battleship, carrier, submarine, destroyer);
   });
   submarine.addEventListener('click', () => {
-    setShipType(submarine.value);
+    gameData.shipPlacement[0] = setShipType(submarine.value);
     togglePressedClass(submarine, cruiser, battleship, carrier, destroyer);
   });
   destroyer.addEventListener('click', () => {
-    setShipType(destroyer.value);
+    gameData.shipPlacement[0] = setShipType(destroyer.value);
     togglePressedClass(destroyer, submarine, cruiser, battleship, carrier);
   });
   //listeners for placement direction
   upArrow.addEventListener('click', () => {
-    setShipDirection(upArrow.value);
+    gameData.shipPlacement[1] = setShipDirection(upArrow.value);
     togglePressedClass(upArrow, downArrow, leftArrow, rightArrow);
   });
   downArrow.addEventListener('click', () => {
-    setShipDirection(downArrow.value);
+    gameData.shipPlacement[1] = setShipDirection(downArrow.value);
     togglePressedClass(downArrow, upArrow, leftArrow, rightArrow);
   });
   leftArrow.addEventListener('click', () => {
-    setShipDirection(leftArrow.value);
+    gameData.shipPlacement[1] = setShipDirection(leftArrow.value);
     togglePressedClass(leftArrow, downArrow, upArrow, rightArrow);
   });
   rightArrow.addEventListener('click', () => {
-    setShipDirection(rightArrow.value);
+    gameData.shipPlacement[1] = setShipDirection(rightArrow.value);
     togglePressedClass(rightArrow, leftArrow, downArrow, upArrow);
   });
 
   //listeners for board squares
-  for (let square in boardSquares) {
+  boardSquares.forEach(square => {
     square.addEventListener('click', () => {
       let row = parseInt(square.getAttribute('data-row'));
       let column = parseInt(square.getAttribute('data-column'));
@@ -154,7 +154,7 @@ const placeShipsScreenEventListeners = () => {
 
       markBoardSquares();
     });
-  }
+  })
 
   //listener for clear button
   const eraseShips = document.querySelector('.clear-ships');
