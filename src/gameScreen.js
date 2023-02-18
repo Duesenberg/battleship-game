@@ -1,8 +1,8 @@
 import {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
 
-const gameScreen = () => {
-  const container = selectDOMel('#container');
+const gameScreenContent = () => {
+  const container = document.querySelector('#container');
 
   removeAllChildNodes(container);//clear the previous screen
 
@@ -22,7 +22,7 @@ const gameScreen = () => {
   const pOneTitle = insertDOMel('p', playerOneInfo, 'title', 'Player 1');
   const pOneStats = insertDOMel('div', playerOneInfo, 'stats');
   const pOneHitsTitle = insertDOMel('p', pOneStats, 'hits-title', 'Hits received:');
-  const pOneHits = insertDOMel('div', pOneStats, 'hits');
+  const pOneHits = insertDOMel('div', pOneStats, 'playerone-hits');
   const pOneCarrier = insertDOMel('p', pOneHits, 'carrier', 'Carrier:');
   const pOneCarrierHits = insertDOMel('div', pOneHits, 'carrier-hits');
   const pOneBattleship = insertDOMel('p', pOneHits, 'battleship', 'Battleship:');
@@ -31,13 +31,13 @@ const gameScreen = () => {
   const pOneCruiserHits = insertDOMel('div', pOneHits, 'cruiser-hits');
   const pOneSubmarine = insertDOMel('p', pOneHits, 'submarine', 'Submarine:');
   const pOneSubmarineHits = insertDOMel('div', pOneHits, 'submarine-hits');
-  const pOneDestriyer = insertDOMel('p', pOneHits, 'destroyer', 'Destroyer:');
+  const pOneDestroyer = insertDOMel('p', pOneHits, 'destroyer', 'Destroyer:');
   const pOneDestroyerHits = insertDOMel('div', pOneHits, 'destroyer-hits');
   //plater two info
   const pTwoTitle = insertDOMel('p', playerTwoInfo, 'title', 'Player 2');
   const pTwoStats = insertDOMel('div', playerTwoInfo, 'stats');
   const pTwoHitsTitle = insertDOMel('p', pTwoStats, 'hits-title', 'Hits received:');
-  const pTwoHits = insertDOMel('div', pTwoStats, 'hits');
+  const pTwoHits = insertDOMel('div', pTwoStats, 'playertwo-hits');
   const pTwoCarrier = insertDOMel('p', pTwoHits, 'carrier', 'Carrier:');
   const pTwoCarrierHits = insertDOMel('div', pTwoHits, 'carrier-hits');
   const pTwoBattleship = insertDOMel('p', pTwoHits, 'battleship', 'Battleship:');
@@ -46,15 +46,23 @@ const gameScreen = () => {
   const pTwoCruiserHits = insertDOMel('div', pTwoHits, 'cruiser-hits');
   const pTwoSubmarine = insertDOMel('p', pTwoHits, 'submarine', 'Submarine:');
   const pTwoSubmarineHits = insertDOMel('div', pTwoHits, 'submarine-hits');
-  const pTwoDestriyer = insertDOMel('p', pTwoHits, 'destroyer', 'Destroyer:');
+  const pTwoDestroyer = insertDOMel('p', pTwoHits, 'destroyer', 'Destroyer:');
   const pTwoDestroyerHits = insertDOMel('div', pTwoHits, 'destroyer-hits');
   //player one board
-  for (let i = 0; i < 100; i++) {
-    const pOneSquare = insertDOMel('div', playerOneBoard, 'square');
-  } 
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const pOneSquare = insertDOMel('div', playerOneBoard, 'board-square');
+      pOneSquare.setAttribute('data-row', i);
+      pOneSquare.setAttribute('data-column', j);
+    }
+  }
   //player two board
-  for (let j = 0; j < 100; j++) {
-    const pTwoSquare = insertDOMel('div', playerTwoBoard, 'square');
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const pTwoSquare = insertDOMel('div', playerTwoBoard, 'board-square');
+      pTwoSquare.setAttribute('data-row', i);
+      pTwoSquare.setAttribute('data-column', j);
+    }
   }
   //round stats
   const roundNoContainer = insertDOMel('div', roundStats, 'round-number-container');
@@ -68,4 +76,36 @@ const gameScreen = () => {
   const logo = insertDOMel('button', roundStats, 'logo');
 }
 
-export {gameScreen};
+//display the no. of hits for each ship for both players
+const hitDisplays = () => {
+  const pOneCarrierHits = document.querySelector('.playerone-hits.carrier-hits');
+  const pOneBattleshipHits = document.querySelector('.playerone-hits.battleship-hits');
+  const pOneCruiserHits = document.querySelector('.playerone-hits.cruiser-hits');
+  const pOneDestroyerHits = document.querySelector('.playerone-hits.destroyer-hits');
+  const pOneSubmarineHits = document.querySelector('.playerone-hits.submarine-hits');
+
+  const pTwoCarrierHits = document.querySelector('.playertwo-hits.carrier-hits');
+  const pTwoBattleshipHits = document.querySelector('.playertwo-hits.battleship-hits');
+  const pTwoCruiserHits = document.querySelector('.playertwo-hits.cruiser-hits');
+  const pTwoDestroyerHits = document.querySelector('.playertwo-hits.destroyer-hits');
+  const pTwoSubmarineHits = document.querySelector('.playertwo-hits.submarine-hits');
+
+  pOneCarrierHits.textContent = gameData.player1.gameBoard.ships.carrier.hits;
+  pOneBattleshipHits.textContent = gameData.player1.gameBoard.ships.battleship.hits;
+  pOneCruiserHits.textContent = gameData.player1.gameBoard.ships.cruiser.hits;
+  pOneDestroyerHits.textContent = gameData.player1.gameBoard.ships.destroyer.hits;
+  pOneSubmarineHits.textContent = gameData.player1.gameBoard.ships.submarine.hits;
+
+  pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
+  pTwoBattleshipHits.textContent = gameData.player2.gameBoard.ships.battleship.hits;
+  pTwoCruiserHits.textContent = gameData.player2.gameBoard.ships.cruiser.hits;
+  pTwoDestroyerHits.textContent = gameData.player2.gameBoard.ships.destroyer.hits;
+  pTwoSubmarineHits.textContent = gameData.player2.gameBoard.ships.submarine.hits;
+}
+
+const generateGameScreen = () => {
+  gameScreenContent();
+  hitDisplays();
+}
+
+export {gameScreenContent, hitDisplays, generateGameScreen};

@@ -1,4 +1,7 @@
-import { gameScreen } from "./gameScreen";
+import { clearObject, updateRound, updateScore, 
+  roundOver, determineRoundWinner, gameOver,
+  determineGameWinner, GenerateGameData, setShipType, setShipDirection } from "./gameLoopAuxFns";
+import { gameScreenContent, hitDisplays, generateGameScreen } from "./gameScreen";
 import { placeShipsScreenContent } from "./placeShipsScreen";
 import { welcomeScreenContent } from "./welcomeScreen";
 
@@ -7,10 +10,18 @@ describe('game screen', () => {
     `<div id="container">` +
     `</div>`;
 
+  let boardSquaresString = '';
+
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      boardSquaresString += `<div class="board-square" data-row="${i}" data-column="${j}"></div>`;
+    }
+  }
+
   it('generates game screen', () => {
     welcomeScreenContent();
     placeShipsScreenContent();
-    gameScreen();
+    gameScreenContent();
 
     expect(document.body.innerHTML).toBe(
     `<div id="container">` +
@@ -22,7 +33,7 @@ describe('game screen', () => {
           `<p class="title">Player 1</p>` +
           `<div class="stats">` +
             `<p class="hits-title">Hits received:</p>` +
-            `<div class="hits">` +
+            `<div class="playerone-hits">` +
               `<p class="carrier">Carrier:</p>` +
               `<div class="carrier-hits"></div>` +
               `<p class="battleship">Battleship:</p>` +
@@ -40,7 +51,7 @@ describe('game screen', () => {
           `<p class="title">Player 2</p>` +
           `<div class="stats">` +
             `<p class="hits-title">Hits received:</p>` +
-            `<div class="hits">` +
+            `<div class="playertwo-hits">` +
               `<p class="carrier">Carrier:</p>` +
               `<div class="carrier-hits"></div>` +
               `<p class="battleship">Battleship:</p>` +
@@ -55,48 +66,10 @@ describe('game screen', () => {
           `</div>` +
         `</div>` +
         `<div class="pone-board">` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
+          boardSquaresString +
         `</div>` +
         `<div class="ptwo-board">` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
-          `<div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div>` +
+          boardSquaresString +
         `</div>` +
         `<div class="round-stats">` +
           `<div class="round-number-container">` +
@@ -113,5 +86,59 @@ describe('game screen', () => {
         `</div>` +
       `</div>` +
     `</div>`);
+  });
+
+  it('displays ship hits of both players', () => {
+    let gameData = GenerateGameData();
+
+    gameScreenContent();
+
+    gameData.player1.gameBoard.placeSelectedShip(0, 0, 'carrier', 'right');
+    gameData.player2.gameBoard.placeSelectedShip(0, 0, 'carrier', 'right');
+
+    const pOneCarrierHits = document.querySelector('.playerone-hits .carrier-hits');
+      const pTwoCarrierHits = document.querySelector('.playertwo-hits .carrier-hits');
+
+    pOneCarrierHits.textContent = gameData.player1.gameBoard.ships.carrier.hits;
+      pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
+    
+  
+    expect(pOneCarrierHits.textContent).toBe('0');
+    expect(pTwoCarrierHits.textContent).toBe('0');
+    
+    gameData.player1.attack(0, 0, gameData.player2);
+    gameData.player1.attack(0, 1, gameData.player2);
+    gameData.player2.attack(0, 0, gameData.player1);
+
+    //need to re-assign textContent value. should add this to the eventListener
+    pOneCarrierHits.textContent = gameData.player1.gameBoard.ships.carrier.hits;
+    pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
+
+    expect(pOneCarrierHits.textContent).toBe('1');
+    expect(pTwoCarrierHits.textContent).toBe('2');
+  });
+
+  it('displays round number', () => {
+
+  });
+
+  it('displays score', () => {
+
+  });
+
+  it('brings confirmation window when restart is clicked', () => {
+
+  });
+
+  it('restarts game when yes is clicked on the confirmation menu', () => {
+
+  });
+
+  it('adds occupied class on squares with ships', () => {
+
+  });
+
+  it('adds class of hit on board squares which have been clicked on or hit by computer', () => {
+
   });
 });
