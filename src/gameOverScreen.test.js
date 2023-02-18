@@ -1,4 +1,4 @@
-import { gameScreen } from "./gameScreen";
+import { gameScreenContent } from "./gameScreen";
 import { placeShipsScreenContent } from "./placeShipsScreen";
 import { welcomeScreenContent } from "./welcomeScreen";
 import { gameOverScreen } from "./gameOverScreen";
@@ -11,7 +11,7 @@ describe('game over screen', () => {
   it('generates game over screen', () => {
     welcomeScreenContent();
     placeShipsScreenContent();
-    gameScreen();
+    gameScreenContent();
     gameOverScreen();
 
     expect(document.body.innerHTML).toBe(

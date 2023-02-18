@@ -1,8 +1,8 @@
-import {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes} 
+import {insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
 
 const gameOverScreen = () => {
-  const container = selectDOMel('#container');
+  const container = document.querySelector('#container');
 
   removeAllChildNodes(container);//clear the previous screen
 
