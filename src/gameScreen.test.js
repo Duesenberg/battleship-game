@@ -97,10 +97,10 @@ describe('game screen', () => {
     gameData.player2.gameBoard.placeSelectedShip(0, 0, 'carrier', 'right');
 
     const pOneCarrierHits = document.querySelector('.playerone-hits .carrier-hits');
-      const pTwoCarrierHits = document.querySelector('.playertwo-hits .carrier-hits');
+    const pTwoCarrierHits = document.querySelector('.playertwo-hits .carrier-hits');
 
     pOneCarrierHits.textContent = gameData.player1.gameBoard.ships.carrier.hits;
-      pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
+    pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
     
   
     expect(pOneCarrierHits.textContent).toBe('0');
@@ -119,11 +119,34 @@ describe('game screen', () => {
   });
 
   it('displays round number', () => {
+    let gameData = GenerateGameData();
 
+    gameScreenContent();
+
+    const roundNo = document.querySelector('.round-number');
+
+    roundNo.textContent = gameData.round;
+    expect(roundNo.textContent).toBe('1');
+    
+    gameData.round = updateRound(gameData.round);
+    roundNo.textContent = gameData.round;
+    expect(roundNo.textContent).toBe('2');
   });
 
   it('displays score', () => {
+    let gameData = GenerateGameData();
 
+    gameScreenContent();
+
+    const score = document.querySelector('.score');
+
+    score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
+    expect(score.textContent).toBe('0 : 0');
+    
+    gameData.roundWinner = 1;
+    updateScore(gameData.roundWinner, gameData.score);
+    score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
+    expect(score.textContent).toBe('1 : 0');
   });
 
   it('brings confirmation window when restart is clicked', () => {
@@ -135,10 +158,83 @@ describe('game screen', () => {
   });
 
   it('adds occupied class on squares with ships', () => {
+    let gameData = GenerateGameData();
 
+    gameScreenContent();
+
+    const playerOneBoardSquares = document.querySelectorAll('.pone-board .board-square');
+    
+    playerOneBoardSquares.forEach(square => {
+      let row = parseInt(square.getAttribute('data-row'));
+      let column = parseInt(square.getAttribute('data-column'));
+      
+      if (gameData.player1.gameBoard.board[row][column].ship !== null) {
+        square.classList.add('occupied');
+      }
+    });
+    const square1 = document.querySelector('[data-row="0"][data-column="0"]');
+    const square2 = document.querySelector('[data-row="0"][data-column="1"]');
+    const square3 = document.querySelector('[data-row="0"][data-column="2"]');
+    expect(square1.className).toBe('board-square');
+    expect(square2.className).toBe('board-square');
+    expect(square3.className).toBe('board-square');
+    
+    gameData.player1.gameBoard.placeSelectedShip(0, 0, 'cruiser', 'right');    
+    playerOneBoardSquares.forEach(square => {
+      let row = parseInt(square.getAttribute('data-row'));
+      let column = parseInt(square.getAttribute('data-column'));
+  
+      if (gameData.player1.gameBoard.board[row][column].ship !== null) {
+        square.classList.add('occupied');
+      }
+    });
+    expect(square1.className).toBe('board-square occupied');
+    expect(square2.className).toBe('board-square occupied');
+    expect(square3.className).toBe('board-square occupied');
   });
 
   it('adds class of hit on board squares which have been clicked on or hit by computer', () => {
+    let gameData = GenerateGameData();
 
+    gameScreenContent();
+
+    gameData.player1.gameBoard.placeSelectedShip(0, 0, 'carrier', 'right');
+    gameData.player2.gameBoard.placeSelectedShip(0, 0, 'carrier', 'right');
+
+    gameData.player1.attack(0, 1, gameData.player2);
+    gameData.player1.attack(1, 0, gameData.player2);
+    gameData.player2.attack(0, 0, gameData.player1);
+
+    const playerOneBoardSquares = document.querySelectorAll('.pone-board .board-square');
+    const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
+
+    playerOneBoardSquares.forEach(square => {
+      let row = parseInt(square.getAttribute('data-row'));
+      let column = parseInt(square.getAttribute('data-column'));
+  
+      if (gameData.player1.gameBoard.board[row][column].hit === true) {
+        square.classList.add('hit');
+      } else if (gameData.player1.gameBoard.board[row][column].hit === false) {
+        square.classList.add('miss');
+      }
+    });
+    playerTwoBoardSquares.forEach(square => {
+      let row = parseInt(square.getAttribute('data-row'));
+      let column = parseInt(square.getAttribute('data-column'));
+  
+      if (gameData.player2.gameBoard.board[row][column].hit === true) {
+        square.classList.add('hit');
+      } else if (gameData.player2.gameBoard.board[row][column].hit === false) {
+        square.classList.add('miss');
+      }
+    });
+
+    const pOneSquareWithShip = document.querySelector('.pone-board [data-row="0"][data-column="0"]');
+    const pTwoSquareNoShip = document.querySelector('.ptwo-board [data-row="1"][data-column="0"]');
+    const pTwoSquareWithShip = document.querySelector('.ptwo-board [data-row="0"][data-column="1"]');
+
+    expect(pOneSquareWithShip.className).toBe('board-square hit');
+    expect(pTwoSquareNoShip.className).toBe('board-square miss');
+    expect(pTwoSquareWithShip.className).toBe('board-square hit');
   });
 });

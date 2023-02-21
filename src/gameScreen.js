@@ -1,5 +1,8 @@
 import {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
+import {placeShipsScreenContent, generatePlaceShipsScreen, placeShipsScreenEventListeners,
+  markBoardSquares, eraseShipsFromBoard, togglePressedClass}
+  from "./placeShipsScreen";
 
 const gameScreenContent = () => {
   const container = document.querySelector('#container');
@@ -103,9 +106,66 @@ const hitDisplays = () => {
   pTwoSubmarineHits.textContent = gameData.player2.gameBoard.ships.submarine.hits;
 }
 
+//display round
+const roundDisplay = () => {
+  const roundNo = document.querySelector('.round-number');
+  roundNo.textContent = gameData.round;
+}
+
+//display score
+const scoreDisplay = () => {
+  const score = document.querySelector('.score');
+  score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
+}
+
+//add occupied class to the ships on player 1 board
+const markPlayerOneShips = () => {
+  const playerOneBoardSquares = document.querySelectorAll('.pone-board .board-square');
+
+  boardSquares.forEach(square => {
+    let row = parseInt(square.getAttribute('data-row'));
+    let column = parseInt(square.getAttribute('data-column'));
+
+    if (gameData.player1.gameBoard.board[row][column].ship !== null) {
+      square.classList.add('occupied');
+    }
+  });
+}
+
+//add class of hit or miss when a square is attacked for both players
+const markHits = () => {
+  const playerOneBoardSquares = document.querySelectorAll('.pone-board .board-square');
+
+  playerOneBoardSquares.forEach(square => {
+    let row = parseInt(square.getAttribute('data-row'));
+    let column = parseInt(square.getAttribute('data-column'));
+
+    if (gameData.player1.gameBoard.board[row][column].hit === true) {
+      square.classList.add('hit');
+    } else if (gameData.player1.gameBoard.board[row][column].hit === false) {
+      square.classList.add('miss');
+    }
+  });
+
+  const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
+
+  playerTwoBoardSquares.forEach(square => {
+    let row = parseInt(square.getAttribute('data-row'));
+    let column = parseInt(square.getAttribute('data-column'));
+
+    if (gameData.player2.gameBoard.board[row][column].hit === true) {
+      square.classList.add('hit');
+    } else if (gameData.player2.gameBoard.board[row][column].hit === false) {
+      square.classList.add('miss');
+    }
+  });
+}
+
 const generateGameScreen = () => {
   gameScreenContent();
   hitDisplays();
+  roundDisplay();
 }
 
-export {gameScreenContent, hitDisplays, generateGameScreen};
+export {gameScreenContent, hitDisplays, generateGameScreen, roundDisplay,
+  markPlayerOneShips, scoreDisplay, markHits};
