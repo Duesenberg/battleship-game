@@ -38,47 +38,76 @@ const Gameboard = () => {
   //accepts ship type as well
   //only insert if square is empty and if ship type has not been entered before
   const insertShipRight = function (row, column, shipType) {
-    //insert ship object to right by number of length units(depending on type)
-    if (this.ships[`${shipType}`].placed === true) {}
-    else if (this.board[row][column + (Ship(shipType).length -1)] !== undefined
-    && this.ships[`${shipType}`].placed === false) {
-      for (let i = 0; i < Ship(shipType).length; i++) {
-        this.board[row][column + i].ship = shipType;
+    //if ship type is placed, or if ship would go out of bounds do nothing
+    if (this.ships[`${shipType}`].placed === true
+    || this.board[row][column + (Ship(shipType).length -1)] === undefined) {}
+    else {
+      //check if there would be overlap
+      let overlap = 0;
+      for (let o = 0; o < Ship(shipType).length; o++) {
+        if (this.board[row][column + o].ship !== null) overlap += 1;
       }
-      this.ships[`${this.board[row][column].ship}`].placed = true;
+      //if no overlap place ship
+      if (overlap === 0) {
+        for (let i = 0; i < Ship(shipType).length; i++) {
+          this.board[row][column + i].ship = shipType;
+        }
+        this.ships[`${this.board[row][column].ship}`].placed = true;
+      }
     }
   };
 
   const insertShipDown = function (row, column, shipType) {
-    if (this.ships[`${shipType}`].placed === true) {}
-    else if (this.board[row + (Ship(shipType).length -1)][column] !== undefined
-    && this.ships[`${shipType}`].placed === false) {
-      for (let i = 0; i < Ship(shipType).length; i++) {
-        this.board[row + i][column].ship = shipType;
+    if (this.ships[`${shipType}`].placed === true
+    || this.board[row + (Ship(shipType).length -1)] === undefined) {}
+    else {
+      let overlap = 0;
+      for (let o = 0; o < Ship(shipType).length; o++) {
+        if (this.board[row + o][column].ship !== null) overlap += 1;
       }
-      this.ships[`${this.board[row][column].ship}`].placed = true;
+
+      if (overlap ===0) {
+        for (let i = 0; i < Ship(shipType).length; i++) {
+          this.board[row + i][column].ship = shipType;
+        }
+        this.ships[`${this.board[row][column].ship}`].placed = true;
+      }
     }
   };
 
   const insertShipLeft = function (row, column, shipType) {
-    if (this.ships[`${shipType}`].placed === true) {}
-    else if (this.board[row][column - (Ship(shipType).length -1)] !== undefined
-    && this.ships[`${shipType}`].placed === false) {
-      for (let i = 0; i < Ship(shipType).length; i++) {
-        this.board[row][column - i].ship = shipType;
+    if (this.ships[`${shipType}`].placed === true
+    || this.board[row][column - (Ship(shipType).length -1)] === undefined) {}
+    else {
+      let overlap = 0;
+      for (let o = 0; o < Ship(shipType).length; o++) {
+        if (this.board[row][column - o].ship !== null) overlap += 1;
       }
-      this.ships[`${this.board[row][column].ship}`].placed = true;
+
+      if (overlap === 0) {
+        for (let i = 0; i < Ship(shipType).length; i++) {
+          this.board[row][column - i].ship = shipType;
+        }
+        this.ships[`${this.board[row][column].ship}`].placed = true;
+      }
     }
   };
 
   const insertShipUp = function (row, column, shipType) {
-    if (this.ships[`${shipType}`].placed === true) {}
-    else if (this.board[row - (Ship(shipType).length -1)][column] !== undefined
-    && this.ships[`${shipType}`].placed === false) {
-      for (let i = 0; i < Ship(shipType).length; i++) {
-        this.board[row - i][column].ship = shipType;
+    if (this.ships[`${shipType}`].placed === true
+    || this.board[row - (Ship(shipType).length -1)] == undefined) {}
+    else {
+      let overlap = 0;
+      for (let o = 0; o < Ship(shipType).length; o++) {
+        if (this.board[row - o][column].ship !== null) overlap += 1;
       }
-      this.ships[`${this.board[row][column].ship}`].placed = true;
+
+      if (overlap === 0) {
+        for (let i = 0; i < Ship(shipType).length; i++) {
+          this.board[row - i][column].ship = shipType;
+        }
+        this.ships[`${this.board[row][column].ship}`].placed = true;
+      }
     }
   };
 
