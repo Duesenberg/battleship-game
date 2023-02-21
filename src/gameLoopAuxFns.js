@@ -8,6 +8,7 @@ const GenerateGameData = () => {
     player2: Player(),
     round: 1,
     score: [0, 0],
+    playerTurn: 1,
     roundIsOver: false,
     gameIsOver: false,
     roundWinner: null,
