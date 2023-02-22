@@ -1,9 +1,7 @@
 import {insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
-import { clearObject, updateRound, updateScore, 
-  roundOver, determineRoundWinner, gameOver,
-  determineGameWinner, GenerateGameData }
-  from "./gameLoopAuxFns";
+import { clearObject, GenerateGameData, setShipType, setShipDirection }
+  from "./game";
 import { Gameboard } from "./gameBoard";
 import { Player, chooseRandomNo } from "./player";
 import { Ship } from "./ship";
