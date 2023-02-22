@@ -1,8 +1,7 @@
 import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
-import { clearObject, updateRound, updateScore, 
-  roundOver, determineRoundWinner, gameOver,
-  determineGameWinner, GenerateGameData, setShipType, setShipDirection  }
-  from "./gameLoopAuxFns";
+import { clearObject, GenerateGameData, setShipType, setShipDirection }
+  from "./game";
+import { generateGameScreen } from "./gameScreen";
 
 //create the content of the screen
 const placeShipsScreenContent = () => {
@@ -172,12 +171,6 @@ const placeShipsScreenEventListeners = () => {
     if (shipsArePlaced === true) generateGameScreen();
   });
 }
-
-//---------------------dummy function while i'm working on gameScreen
-const generateGameScreen = () => {
-  console.log('no hill for a stepper');
-}
-//------------------------------------------------------
 
 const generatePlaceShipsScreen = () => {
   placeShipsScreenContent();
