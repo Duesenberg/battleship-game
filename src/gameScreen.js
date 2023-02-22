@@ -1,8 +1,6 @@
-import {selectDOMel, selectDOMelAll, insertDOMel, removeAllChildNodes} 
+import { insertDOMel, removeAllChildNodes } 
   from "./auxFnsDOM";
-import {placeShipsScreenContent, generatePlaceShipsScreen, placeShipsScreenEventListeners,
-  markBoardSquares, eraseShipsFromBoard, togglePressedClass}
-  from "./placeShipsScreen";
+import { endGame, restartGame, changeTurn, computerPlay } from "./game";
 
 const gameScreenContent = () => {
   const container = document.querySelector('#container');
@@ -17,7 +15,7 @@ const gameScreenContent = () => {
   const playerTwoInfo = insertDOMel('div', screen, 'ptwo-stats');
   const playerOneBoard = insertDOMel('div', screen, 'pone-board');
   const playerTwoBoard = insertDOMel('div', screen, 'ptwo-board');
-  const roundStats = insertDOMel('div', screen, 'round-stats');
+  const gameOptions = insertDOMel('div', screen, 'options');
 
   //header
   const title = insertDOMel('h1', header, 'title', 'Battleship');
@@ -67,16 +65,10 @@ const gameScreenContent = () => {
       pTwoSquare.setAttribute('data-column', j);
     }
   }
-  //round stats
-  const roundNoContainer = insertDOMel('div', roundStats, 'round-number-container');
-  const roundNoText = insertDOMel('p', roundNoContainer, 'text', 'Round');
-  const roundNo = insertDOMel('div', roundNoContainer, 'round-number');
-  const scoreContainer = insertDOMel('div', roundStats, 'score-container');
-  const scoreText = insertDOMel('p', scoreContainer, 'text', 'Score');
-  const score = insertDOMel('div', scoreContainer, 'score');
-  const restartButton = insertDOMel('button', roundStats, 'restart-game-button', 'Restart');
-  const toggleSound = insertDOMel('button', roundStats, 'toggle-sound');
-  const logo = insertDOMel('button', roundStats, 'logo');
+  //game options
+  const logo = insertDOMel('button', gameOptions, 'logo');
+  const restartButton = insertDOMel('button', gameOptions, 'restart-game-button', 'Restart');
+  const toggleSound = insertDOMel('button', gameOptions, 'toggle-sound');
 }
 
 //display the no. of hits for each ship for both players
@@ -93,29 +85,17 @@ const hitDisplays = () => {
   const pTwoDestroyerHits = document.querySelector('.playertwo-hits.destroyer-hits');
   const pTwoSubmarineHits = document.querySelector('.playertwo-hits.submarine-hits');
 
-  pOneCarrierHits.textContent = gameData.player1.gameBoard.ships.carrier.hits;
-  pOneBattleshipHits.textContent = gameData.player1.gameBoard.ships.battleship.hits;
-  pOneCruiserHits.textContent = gameData.player1.gameBoard.ships.cruiser.hits;
-  pOneDestroyerHits.textContent = gameData.player1.gameBoard.ships.destroyer.hits;
-  pOneSubmarineHits.textContent = gameData.player1.gameBoard.ships.submarine.hits;
+  pOneCarrierHits.textContent = `${gameData.player1.gameBoard.ships.carrier.hits}/5`;
+  pOneBattleshipHits.textContent = `${gameData.player1.gameBoard.ships.battleship.hits}/4`;
+  pOneCruiserHits.textContent = `${gameData.player1.gameBoard.ships.cruiser.hits}/3`;
+  pOneDestroyerHits.textContent = `${gameData.player1.gameBoard.ships.destroyer.hits}/3`;
+  pOneSubmarineHits.textContent = `${gameData.player1.gameBoard.ships.submarine.hits}/2`;
 
-  pTwoCarrierHits.textContent = gameData.player2.gameBoard.ships.carrier.hits;
-  pTwoBattleshipHits.textContent = gameData.player2.gameBoard.ships.battleship.hits;
-  pTwoCruiserHits.textContent = gameData.player2.gameBoard.ships.cruiser.hits;
-  pTwoDestroyerHits.textContent = gameData.player2.gameBoard.ships.destroyer.hits;
-  pTwoSubmarineHits.textContent = gameData.player2.gameBoard.ships.submarine.hits;
-}
-
-//display round
-const roundDisplay = () => {
-  const roundNo = document.querySelector('.round-number');
-  roundNo.textContent = gameData.round;
-}
-
-//display score
-const scoreDisplay = () => {
-  const score = document.querySelector('.score');
-  score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
+  pTwoCarrierHits.textContent = `${gameData.player2.gameBoard.ships.carrier.hits}/5`;
+  pTwoBattleshipHits.textContent = `${gameData.player2.gameBoard.ships.battleship.hits}/4`;
+  pTwoCruiserHits.textContent = `${gameData.player2.gameBoard.ships.cruiser.hits}/3`;
+  pTwoDestroyerHits.textContent = `${gameData.player2.gameBoard.ships.destroyer.hits}/3`;
+  pTwoSubmarineHits.textContent = `${gameData.player2.gameBoard.ships.submarine.hits}/2`;
 }
 
 //add occupied class to the ships on player 1 board
@@ -161,11 +141,47 @@ const markHits = () => {
   });
 }
 
-const generateGameScreen = () => {
-  gameScreenContent();
-  hitDisplays();
-  roundDisplay();
+//add event listeners
+const gameScreenEventListeners = () => {
+  //restart button
+  const restartButton = document.querySelector('.restart-game-button');
+  restartButton.addEventListener('click', () => {
+    restartGame();
+  });
+  //player 2 board
+  const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
+  playerTwoBoardSquares.forEach(square => {
+    square.addEventListener('click', () => {
+      if (gameData.playerTurn === 1) {
+        let row = parseInt(square.getAttribute('data-row'));
+        let column = parseInt(square.getAttribute('data-column'));
+  
+        //change turn if square is unoccupied.
+        //prevents computer from playing if click is on already hit square
+        if (gameData.player2.gameBoard.board[row][column].hit === null)
+          gameData.playerTurn = changeTurn();
+  
+        gameData.player1.attack(row, column, gameData.player2);
+        markHits();
+        hitDisplays();
+        endGame();
+  
+        //computer makes a move if turn has been changed
+        if (gameData.playerTurn === 2)
+          setTimeout(() => {
+            computerPlay();
+          }, 1000); 
+      }
+    });
+  });
 }
 
-export {gameScreenContent, hitDisplays, generateGameScreen, roundDisplay,
-  markPlayerOneShips, scoreDisplay, markHits};
+const generateGameScreen = () => {
+  gameScreenContent();
+  markPlayerOneShips();
+  hitDisplays();
+  gameScreenEventListeners();
+}
+
+export {gameScreenContent, hitDisplays, generateGameScreen,
+  markPlayerOneShips, markHits, gameScreenEventListeners};

@@ -1,6 +1,6 @@
-import { clearObject, updateRound, updateScore, 
-  roundOver, determineRoundWinner, gameOver,
-  determineGameWinner, GenerateGameData, setShipType, setShipDirection } from "./gameLoopAuxFns";
+import { clearObject, gameOver,
+  determineGameWinner, GenerateGameData, setShipType, setShipDirection } 
+  from "./game";
 import { gameScreenContent, hitDisplays, generateGameScreen } from "./gameScreen";
 import { placeShipsScreenContent } from "./placeShipsScreen";
 import { welcomeScreenContent } from "./welcomeScreen";
@@ -71,18 +71,10 @@ describe('game screen', () => {
         `<div class="ptwo-board">` +
           boardSquaresString +
         `</div>` +
-        `<div class="round-stats">` +
-          `<div class="round-number-container">` +
-            `<p class="text">Round</p>` +
-            `<div class="round-number"></div>` +
-          `</div>` +
-          `<div class="score-container">` +
-            `<p class="text">Score</p>` +
-            `<div class="score"></div>` +
-          `</div>` +
+        `<div class="options">` +
+          `<button class="logo"></button>` +
           `<button class="restart-game-button">Restart</button>` +
           `<button class="toggle-sound"></button>` +
-          `<button class="logo"></button>` +
         `</div>` +
       `</div>` +
     `</div>`);
@@ -116,37 +108,6 @@ describe('game screen', () => {
 
     expect(pOneCarrierHits.textContent).toBe('1');
     expect(pTwoCarrierHits.textContent).toBe('2');
-  });
-
-  it('displays round number', () => {
-    let gameData = GenerateGameData();
-
-    gameScreenContent();
-
-    const roundNo = document.querySelector('.round-number');
-
-    roundNo.textContent = gameData.round;
-    expect(roundNo.textContent).toBe('1');
-    
-    gameData.round = updateRound(gameData.round);
-    roundNo.textContent = gameData.round;
-    expect(roundNo.textContent).toBe('2');
-  });
-
-  it('displays score', () => {
-    let gameData = GenerateGameData();
-
-    gameScreenContent();
-
-    const score = document.querySelector('.score');
-
-    score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
-    expect(score.textContent).toBe('0 : 0');
-    
-    gameData.roundWinner = 1;
-    updateScore(gameData.roundWinner, gameData.score);
-    score.textContent = `${gameData.score[0]} : ${gameData.score[1]}`;
-    expect(score.textContent).toBe('1 : 0');
   });
 
   it('brings confirmation window when restart is clicked', () => {
@@ -193,7 +154,7 @@ describe('game screen', () => {
     expect(square3.className).toBe('board-square occupied');
   });
 
-  it('adds class of hit on board squares which have been clicked on or hit by computer', () => {
+  it('adds class of hit on board squares which have been clicked on or hit', () => {
     let gameData = GenerateGameData();
 
     gameScreenContent();
