@@ -7,7 +7,7 @@ const gameScreenContent = () => {
 
   removeAllChildNodes(container);//clear the previous screen
 
-  const screen = insertDOMel('div', container, 'screen');
+  const screen = insertDOMel('div', container, 'game-screen');
 
   //main screen containers
   const header = insertDOMel('div', screen, 'header');
@@ -73,36 +73,36 @@ const gameScreenContent = () => {
 
 //display the no. of hits for each ship for both players
 const hitDisplays = () => {
-  const pOneCarrierHits = document.querySelector('.playerone-hits.carrier-hits');
-  const pOneBattleshipHits = document.querySelector('.playerone-hits.battleship-hits');
-  const pOneCruiserHits = document.querySelector('.playerone-hits.cruiser-hits');
-  const pOneDestroyerHits = document.querySelector('.playerone-hits.destroyer-hits');
-  const pOneSubmarineHits = document.querySelector('.playerone-hits.submarine-hits');
+  const pOneCarrierHits = document.querySelector('.playerone-hits .carrier-hits');
+  const pOneBattleshipHits = document.querySelector('.playerone-hits .battleship-hits');
+  const pOneCruiserHits = document.querySelector('.playerone-hits .cruiser-hits');
+  const pOneDestroyerHits = document.querySelector('.playerone-hits .destroyer-hits');
+  const pOneSubmarineHits = document.querySelector('.playerone-hits .submarine-hits');
 
-  const pTwoCarrierHits = document.querySelector('.playertwo-hits.carrier-hits');
-  const pTwoBattleshipHits = document.querySelector('.playertwo-hits.battleship-hits');
-  const pTwoCruiserHits = document.querySelector('.playertwo-hits.cruiser-hits');
-  const pTwoDestroyerHits = document.querySelector('.playertwo-hits.destroyer-hits');
-  const pTwoSubmarineHits = document.querySelector('.playertwo-hits.submarine-hits');
+  const pTwoCarrierHits = document.querySelector('.playertwo-hits .carrier-hits');
+  const pTwoBattleshipHits = document.querySelector('.playertwo-hits .battleship-hits');
+  const pTwoCruiserHits = document.querySelector('.playertwo-hits .cruiser-hits');
+  const pTwoDestroyerHits = document.querySelector('.playertwo-hits .destroyer-hits');
+  const pTwoSubmarineHits = document.querySelector('.playertwo-hits .submarine-hits');
 
   pOneCarrierHits.textContent = `${gameData.player1.gameBoard.ships.carrier.hits}/5`;
   pOneBattleshipHits.textContent = `${gameData.player1.gameBoard.ships.battleship.hits}/4`;
   pOneCruiserHits.textContent = `${gameData.player1.gameBoard.ships.cruiser.hits}/3`;
-  pOneDestroyerHits.textContent = `${gameData.player1.gameBoard.ships.destroyer.hits}/3`;
-  pOneSubmarineHits.textContent = `${gameData.player1.gameBoard.ships.submarine.hits}/2`;
+  pOneDestroyerHits.textContent = `${gameData.player1.gameBoard.ships.submarine.hits}/3`;
+  pOneSubmarineHits.textContent = `${gameData.player1.gameBoard.ships.destroyer.hits}/2`;
 
   pTwoCarrierHits.textContent = `${gameData.player2.gameBoard.ships.carrier.hits}/5`;
   pTwoBattleshipHits.textContent = `${gameData.player2.gameBoard.ships.battleship.hits}/4`;
   pTwoCruiserHits.textContent = `${gameData.player2.gameBoard.ships.cruiser.hits}/3`;
-  pTwoDestroyerHits.textContent = `${gameData.player2.gameBoard.ships.destroyer.hits}/3`;
-  pTwoSubmarineHits.textContent = `${gameData.player2.gameBoard.ships.submarine.hits}/2`;
+  pTwoDestroyerHits.textContent = `${gameData.player2.gameBoard.ships.submarine.hits}/3`;
+  pTwoSubmarineHits.textContent = `${gameData.player2.gameBoard.ships.destroyer.hits}/2`;
 }
 
 //add occupied class to the ships on player 1 board
 const markPlayerOneShips = () => {
   const playerOneBoardSquares = document.querySelectorAll('.pone-board .board-square');
 
-  boardSquares.forEach(square => {
+  playerOneBoardSquares.forEach(square => {
     let row = parseInt(square.getAttribute('data-row'));
     let column = parseInt(square.getAttribute('data-column'));
 
@@ -146,7 +146,7 @@ const gameScreenEventListeners = () => {
   //restart button
   const restartButton = document.querySelector('.restart-game-button');
   restartButton.addEventListener('click', () => {
-    restartGame();
+    restartGame(gameData);
   });
   //player 2 board
   const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
@@ -159,18 +159,16 @@ const gameScreenEventListeners = () => {
         //change turn if square is unoccupied.
         //prevents computer from playing if click is on already hit square
         if (gameData.player2.gameBoard.board[row][column].hit === null)
-          gameData.playerTurn = changeTurn();
+          gameData.playerTurn = changeTurn(gameData.playerTurn);
   
         gameData.player1.attack(row, column, gameData.player2);
         markHits();
         hitDisplays();
-        endGame();
+        endGame(gameData);
   
         //computer makes a move if turn has been changed
         if (gameData.playerTurn === 2)
-          setTimeout(() => {
-            computerPlay();
-          }, 1000); 
+          computerPlay();
       }
     });
   });

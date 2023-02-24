@@ -25,7 +25,7 @@ describe('game screen', () => {
 
     expect(document.body.innerHTML).toBe(
     `<div id="container">` +
-      `<div class="screen">` +
+      `<div class="game-screen">` +
         `<div class="header">` +
           `<h1 class="title">Battleship</h1>` +
         `</div>` +
