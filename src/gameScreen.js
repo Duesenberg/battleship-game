@@ -167,7 +167,7 @@ const gameScreenEventListeners = () => {
         endGame(gameData);
   
         //computer makes a move if turn has been changed
-        if (gameData.playerTurn === 2)
+        if (gameData.playerTurn === 2 && gameData.gameWinner === null)
           computerPlay();
       }
     });
