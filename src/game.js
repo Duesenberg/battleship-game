@@ -49,16 +49,18 @@ const setShipDirection = (direction) => direction;
 const restartGame = (gameData) => {
   generateWelcomeScreen();
   clearObject(gameData);
-  gameData = GenerateGameData();
+  window.gameData = GenerateGameData();
 }
 
 //computer makes a move
-const computerPlay = () => {
-  gameData.player2.randomAttack(gameData.player1);
-  markHits();
-  hitDisplays();
-  gameData.playerTurn = changeTurn();
-  endGame();
+const computerPlay = async () => {
+  setTimeout(() => {
+    gameData.player2.randomAttack(gameData.player1);
+    markHits();
+    hitDisplays();
+    gameData.playerTurn = changeTurn(gameData.playerTurn);
+    endGame(gameData);
+  }, 1000);
 }
 
 //return 1 if player 1 wins, else 2.
@@ -71,6 +73,7 @@ const gameWinner = (gameData) => {
 const endGame = (gameData) => {
   if (gameOver(gameData) === true) {
     gameData.gameWinner = gameWinner(gameData);
+    console.log(gameData.gameWinner);
     //gameOverScreen(gameData);
   }
 }
