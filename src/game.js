@@ -1,6 +1,7 @@
 import { Player } from "./player";
 import { generateWelcomeScreen } from "./welcomeScreen";
 import { markHits, hitDisplays } from "./gameScreen";
+import { generateGameOverScreen } from "./gameOverScreen";
 
 //generate object containing game data
 const GenerateGameData = () => {
@@ -73,8 +74,7 @@ const gameWinner = (gameData) => {
 const endGame = (gameData) => {
   if (gameOver(gameData) === true) {
     gameData.gameWinner = gameWinner(gameData);
-    console.log(gameData.gameWinner);
-    //gameOverScreen(gameData);
+    generateGameOverScreen();
   }
 }
 
