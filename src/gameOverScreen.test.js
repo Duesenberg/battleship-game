@@ -16,7 +16,7 @@ describe('game over screen', () => {
 
     expect(document.body.innerHTML).toBe(
       '<div id="container">' +
-        '<div class="screen">' +
+        '<div class="game-over-screen">' +
           '<div class="avatar-one">' +
             '<img class="image">' +
           '</div>' +

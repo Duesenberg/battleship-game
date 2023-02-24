@@ -1,0 +1,25 @@
+* {
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+body {
+  background-color: blue;
+}
+
+#container {
+  height: auto;
+  min-height: 100vh;
+  padding: auto;
+  background-color: cyan;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-over-screen {
+  background-color: blue;
+  display: flex;
+  flex-direction: row;
+}
+
