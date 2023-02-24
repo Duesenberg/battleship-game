@@ -2,6 +2,8 @@ import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
 import { clearObject, GenerateGameData, setShipType, setShipDirection }
   from "./game";
 import { generateGameScreen } from "./gameScreen";
+import { loadShipLayout, layoutArray } 
+  from "./computerShipLayouts";
 
 //create the content of the screen
 const placeShipsScreenContent = () => {
@@ -9,7 +11,7 @@ const placeShipsScreenContent = () => {
 
   removeAllChildNodes(container);//clear the welcome screen
 
-  const screen = insertDOMel('div', container, 'screen');
+  const screen = insertDOMel('div', container, 'place-ships-screen');
   //append four main divs on screen
   const header = insertDOMel('div', screen, 'header');
   const ships = insertDOMel('div', screen, 'ships');
@@ -168,7 +170,10 @@ const placeShipsScreenEventListeners = () => {
 
     shipsArePlaced = gameData.player1.gameBoard.shipsAreReady();
 
-    if (shipsArePlaced === true) generateGameScreen();
+    if (shipsArePlaced === true) {
+      generateGameScreen();
+      loadShipLayout(gameData, layoutArray);
+    }
   });
 }
 

@@ -19,7 +19,7 @@ describe('place ships screen', () => {
 
     expect(document.body.innerHTML).toBe(
       '<div id="container">' +
-        '<div class="screen">' +
+        '<div class="place-ships-screen">' +
           '<div class="header">' +
             '<h1 class="title">Place your Ships</h1>' +
           '</div>' +
