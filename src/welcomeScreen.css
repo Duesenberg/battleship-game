@@ -27,13 +27,13 @@ body {
   background-color: yellow;
 }
 
-.game-title {
+.welcome-screen .game-title {
   font-size: 1.5rem;
   font-weight: 700;
   background-color: green;
 }
 
-.start-game {
+.welcome-screen .start-game {
   padding: 5px;
   background-color: green;
 }

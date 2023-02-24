@@ -7,13 +7,23 @@ body {
   background-color: blue;
 }
 
-.screen {
+#container {
+  height: auto;
+  min-height: 100vh;
+  padding: auto;
+  background-color: cyan;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.place-ships-screen {
   background-color: cyan;
   display: grid;
   grid-template: 1fr 8fr / repeat(3, 1fr);
 }
 
-.header {
+.place-ships-screen .header {
   grid-area: 1 / 1 / 2 / 4;
   background-color: green;
   display: flex;
@@ -30,7 +40,7 @@ body {
   background-color: red;
 }
 
-.board {
+.place-ships-screen .board {
   grid-area: 2 / 2 / 3 / 3;
   background-color: blue;
   display: grid;
