@@ -10,7 +10,8 @@ const GenerateGameData = () => {
     player2: Player(),
     playerTurn: 1,
     gameWinner: null,
-    shipPlacement: ['carrier', 'right']
+    shipPlacement: ['carrier', 'right'],
+    muted: false
   }
 }
 
@@ -76,6 +77,11 @@ const endGame = (gameData) => {
     gameData.gameWinner = gameWinner(gameData);
     generateGameOverScreen();
   }
+}
+
+const toggleSound = (gameData) => {
+  if (gameData.muted === false) return gameData.muted = true;
+  else return gameData.muted = true;
 }
 
 export { clearObject, GenerateGameData, setShipType, setShipDirection,
