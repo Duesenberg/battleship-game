@@ -21,6 +21,7 @@ const gameOverScreenContent = () => {
   const restartButton = insertDOMel('button', middleDiv, 'restart-game', 'Play Again');
 }
 
+//display message on who is the winner
 const displayWinner = (gameData) => {
   const winnerText = document.querySelector('.winner');
 
