@@ -81,8 +81,8 @@ const endGame = (gameData) => {
 
 const toggleSound = (gameData) => {
   if (gameData.muted === false) return gameData.muted = true;
-  else return gameData.muted = true;
+  else return gameData.muted = false;
 }
 
 export { clearObject, GenerateGameData, setShipType, setShipDirection,
-  gameOver, changeTurn, restartGame, computerPlay, endGame };
+  gameOver, changeTurn, restartGame, computerPlay, endGame, toggleSound };
