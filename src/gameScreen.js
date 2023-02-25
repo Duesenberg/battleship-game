@@ -146,7 +146,7 @@ const gameScreenEventListeners = () => {
   //restart button
   const restartButton = document.querySelector('.restart-game-button');
   restartButton.addEventListener('click', () => {
-    restartGame(gameData);
+    restartGamePopUp();
   });
   //player 2 board
   const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
@@ -171,6 +171,25 @@ const gameScreenEventListeners = () => {
           computerPlay();
       }
     });
+  });
+}
+
+//pop up window for restarting the game
+const restartGamePopUp = () => {
+  const screen = document.querySelector('.game-screen');
+
+  const popUpWindow = insertDOMel('div', screen, 'pop-up');
+  const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Restart Game?');
+  const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
+  const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
+
+  yesButton.addEventListener('click', () => {
+    restartGame(gameData);
+  });
+  noButton.addEventListener('click', () => {
+    if (popUpWindow.parentNode) {
+      popUpWindow.parentNode.removeChild(popUpWindow);
+    }
   });
 }
 

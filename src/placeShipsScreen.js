@@ -8,10 +8,9 @@ import { loadShipLayout, layoutArray }
 //create the content of the screen
 const placeShipsScreenContent = () => {
   const container = document.querySelector('#container');
-
   removeAllChildNodes(container);//clear the welcome screen
-
   const screen = insertDOMel('div', container, 'place-ships-screen');
+
   //append four main divs on screen
   const header = insertDOMel('div', screen, 'header');
   const ships = insertDOMel('div', screen, 'ships');
@@ -20,33 +19,47 @@ const placeShipsScreenContent = () => {
 
   //header content
   const title = insertDOMel('h1', header, 'title', 'Place your Ships');
+
   //ships div content
   const shipsHeader = insertDOMel('p', ships, 'ships-header', 'Ships:');
+
   const carrier = insertDOMel('button', ships, 'carrier-button', 'Carrier');
   carrier.setAttribute('value', 'carrier');
-  carrier.classList.add('pressed');
+  carrier.classList.add('pressed');//make this button pressed by default
+
   const battleship = insertDOMel('button', ships, 'battleship-button', 'Battleship');
   battleship.setAttribute('value', 'battleship');
+
   const cruiser = insertDOMel('button', ships, 'cruiser-button', 'Cruiser');
   cruiser.setAttribute('value', 'cruiser');
+
   const submarine = insertDOMel('button', ships, 'submarine-button', 'Submarine');
   submarine.setAttribute('value', 'submarine');
+
   const destroyer = insertDOMel('button', ships, 'destroyer-button', 'Destroyer');
   destroyer.setAttribute('value', 'destroyer');
+
   //controls content
   const controlsHeader = insertDOMel('p', controls, 'controls-header', 'Placement direction:');
   const arrowsContainer = insertDOMel('div', controls, 'arrows-container');
+
   const upArrow = insertDOMel('button', arrowsContainer, 'arrow-up');
   upArrow.setAttribute('value', 'up');
+
   const downArrow = insertDOMel('button', arrowsContainer, 'arrow-down');
   downArrow.setAttribute('value', 'down');
+
   const leftArrow = insertDOMel('button', arrowsContainer, 'arrow-left');
   leftArrow.setAttribute('value', 'left');
+
   const rightArrow = insertDOMel('button', arrowsContainer, 'arrow-right');
   rightArrow.setAttribute('value', 'right');
-  rightArrow.classList.add('pressed');
+  rightArrow.classList.add('pressed');//make this button pressed by default
+
   const finishPlacement = insertDOMel('button', controls, 'finish-button', 'Finish');
+  const finishPlacementAlert = insertDOMel ('p', controls, 'finish-alert', 'Please place all ships.');
   const eraseShips = insertDOMel('button', controls, 'clear-ships', 'Clear');
+
   //board content
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 10; j++) {
@@ -70,15 +83,13 @@ const markBoardSquares = () => {
   });
 }
 
-//remove the occupied class from the board squares & clear data from board
+//remove the occupied class from the board squares
 const eraseShipsFromBoard = () => {
   const boardSquares = document.querySelectorAll('.board-square');
 
   boardSquares.forEach(square => {
     square.classList.remove('occupied');
   })
-
-  gameData.player1.gameBoard.clearBoard();
 }
 
 //toggles pressed class. adds it to first parameter, removes it from rest
@@ -152,15 +163,15 @@ const placeShipsScreenEventListeners = () => {
       let shipDirection = gameData.shipPlacement[1];
 
       gameData.player1.gameBoard.placeSelectedShip(row, column, shipType, shipDirection);
-
       markBoardSquares();
     });
   })
 
-  //listener for clear button
+  //listener for clear button. erases ships from board & data object
   const eraseShips = document.querySelector('.clear-ships');
   eraseShips.addEventListener('click', () => {
     eraseShipsFromBoard();
+    gameData.player1.gameBoard.clearBoard();
   })
 
   //listener for finish button
@@ -173,6 +184,9 @@ const placeShipsScreenEventListeners = () => {
     if (shipsArePlaced === true) {
       generateGameScreen();
       loadShipLayout(gameData, layoutArray);
+    } else {
+      const finishPlacementAlert = document.querySelector('.finish-alert');
+      finishPlacementAlert.classList.add('visible');
     }
   });
 }
