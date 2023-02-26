@@ -21,7 +21,7 @@ const placeShipsScreenContent = () => {
   const title = insertDOMel('h1', header, 'title', 'Place your Ships');
 
   //ships div content
-  const shipsHeader = insertDOMel('p', ships, 'ships-header', 'Ships:');
+  const shipsHeader = insertDOMel('p', ships, 'ships-header', 'Ship:');
 
   const carrier = insertDOMel('button', ships, 'carrier-button', 'Carrier');
   carrier.setAttribute('value', 'carrier');
@@ -40,7 +40,7 @@ const placeShipsScreenContent = () => {
   destroyer.setAttribute('value', 'destroyer');
 
   //controls content
-  const controlsHeader = insertDOMel('p', controls, 'controls-header', 'Placement direction:');
+  const controlsHeader = insertDOMel('p', controls, 'controls-header', 'Direction:');
   const arrowsContainer = insertDOMel('div', controls, 'arrows-container');
 
   const upArrow = insertDOMel('button', arrowsContainer, 'arrow-up');
@@ -57,8 +57,8 @@ const placeShipsScreenContent = () => {
   rightArrow.classList.add('pressed');//make this button pressed by default
 
   const finishPlacement = insertDOMel('button', controls, 'finish-button', 'Finish');
-  const finishPlacementAlert = insertDOMel ('p', controls, 'finish-alert', 'Please place all ships.');
   const eraseShips = insertDOMel('button', controls, 'clear-ships', 'Clear');
+  const finishPlacementAlert = insertDOMel ('p', controls, 'finish-alert', 'Please place all ships.');
 
   //board content
   for (let i = 0; i < 10; i++) {

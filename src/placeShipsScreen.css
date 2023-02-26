@@ -1,43 +1,233 @@
-* {
-  font-family: sans-serif;
-  font-size: 16px;
-}
-
-body {
-  background-color: blue;
-}
-
-#container {
-  height: auto;
-  min-height: 100vh;
-  padding: auto;
-  background-color: cyan;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .place-ships-screen {
-  background-color: cyan;
+  max-height: 100vh;
   display: grid;
-  grid-template: 1fr 8fr / repeat(3, 1fr);
+  grid-template: 100px 400px / 200px 400px 200px;
+  gap: 20px;
 }
 
 .place-ships-screen .header {
   grid-area: 1 / 1 / 2 / 4;
-  background-color: green;
+  background-image: url(./assets/place-ships-header-panel.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 840px 100px;
+  background-color: transparent;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.place-ships-screen .header .title {
+  color: black;
+  font-family: 'Pixel 1', 'Roboto', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .ships {
   grid-area: 2 / 1 / 3 / 2;
-  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-image: url(./assets/Place-ships_left&right-panel.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 200px 400px;
+  background-color: transparent;
+  padding: 30px;
+}
+
+.ships-header {
+  color: black;
+  font-family: 'Pixel 2', 'Roboto', sans-serif;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.ships button {
+  width: 140px;
+  height: 40px;
+  color: black;
+  font-family: 'Pixel 2', 'Roboto', sans-serif;
+  font-size: .6rem;
+  background-image: url(./assets/Ship-selection-button-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 140px 40px;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+.ships button:hover {
+  color: white;
+}
+
+.ships button:active, .ships button.pressed {
+  background-image: url(./assets/Ship-selection-button-pressedl.png);
 }
 
 .controls {
   grid-area: 2 / 3 / 3 / 4;
-  background-color: red;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-image: url(./assets/Place-ships_left&right-panel.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 200px 400px;
+  background-color: transparent;
+  align-items: center;
+  padding: 30px;
+}
+
+.controls-header {
+  color: black;
+  font-family: 'Pixel 2', 'Roboto', sans-serif;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.arrows-container {
+  display: grid;
+  grid-template: repeat(3, 45px) / repeat(3, 45px);
+  justify-items: center;
+  align-items: center;
+}
+
+.arrow-up {
+  grid-area: 1 / 2 / 2 / 3;
+  height: 45px;
+  width: 45px;
+  background-image: url(./assets/Placement-arrows-up-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 45px 45px;
+  background-color: transparent;
+  border: none;
+} 
+
+.arrow-up:active, .arrow-up.pressed {
+  background-image: url(./assets/Placement-arrows-up-pressed.png);
+}
+
+.arrow-up:hover {
+  background-image: url(./assets/Placement-arrows-up-normal-hover.png);
+}
+
+.arrow-up.pressed:hover {
+  background-image: url(./assets/Placement-arrows-up-pressed-hover.png);
+}
+
+.arrow-down {
+  grid-area: 3 / 2 / 4 / 3;
+  height: 45px;
+  width: 45px;
+  background-image: url(./assets/Placement-arrows-down-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 45px 45px;
+  background-color: transparent;
+  border: none;
+}
+
+.arrow-down:active, .arrow-down.pressed {
+  background-image: url(./assets/Placement-arrows-down-pressed.png);
+}
+
+.arrow-down:hover {
+  background-image: url(./assets/Placement-arrows-down-normal-hover.png);
+}
+
+.arrow-down.pressed:hover {
+  background-image: url(./assets/Placement-arrows-down-pressed-hover.png);
+}
+
+.arrow-left {
+  grid-area: 2 / 1 / 3 / 2;
+  height: 45px;
+  width: 45px;
+  background-image: url(./assets/Placement-arrows-left-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 45px 45px;
+  background-color: transparent;
+  border: none;
+} 
+
+.arrow-left:active, .arrow-left.pressed {
+  background-image: url(./assets/Placement-arrows-left-pressed.png);
+}
+
+.arrow-left:hover {
+  background-image: url(./assets/Placement-arrows-left-normal-hover.png);
+}
+
+.arrow-left.pressed:hover {
+  background-image: url(./assets/Placement-arrows-left-pressed-hover.png);
+}
+
+.arrow-right {
+  grid-area: 2 / 3 / 3 / 4;
+  height: 45px;
+  width: 45px;
+  background-image: url(./assets/Placement-arrows-right-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 45px 45px;
+  background-color: transparent;
+  border: none;
+}
+
+.arrow-right.pressed:hover {
+  background-image: url(./assets/Placement-arrows-right-pressed-hover.png);
+}
+
+.arrow-right:active, .arrow-right.pressed {
+  background-image: url(./assets/Placement-arrows-right-pressed.png);
+}
+
+.arrow-right:hover {
+  background-image: url(./assets/Placement-arrows-right-normal-hover.png);
+}
+
+.controls .finish-button,
+.controls .clear-ships {
+  width: 140px;
+  height: 40px;
+  color: black;
+  font-family: 'Pixel 2', 'Roboto', sans-serif;
+  font-size: .6rem;
+  background-image: url(./assets/Ship-selection-button-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 140px 40px;
+  background-color: transparent;
+  border: none;
+  text-align: center;
+}
+
+.controls .finish-button:hover,
+.controls .clear-ships:hover {
+  color: white;
+}
+
+.controls .finish-button:active,
+.controls .clear-ships:active  {
+  background-image: url(./assets/Ship-selection-button-pressedl.png);
+}
+
+.finish-alert {
+  font-family: 'Pixel 2', 'Roboto', sans-serif;
+  font-size: .6rem;
+  display: none;
+}
+
+.finish-alert.visible {
+  display: block;
 }
 
 .place-ships-screen .board {
@@ -46,24 +236,33 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  background-color: white;
-}
-
-button.pressed {
-  background-color: black;
+  background-image: url(./assets/Place-ships_board-panell.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 400px 400px;
+  background-color: transparent;
+  padding: 30px;
 }
 
 .board-square {
-  border: 1px solid black;
+  width: 30px;
+  height: 30px;
+  background-image: url(./assets/board-square-normal.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px 30px;
+  background-color: transparent;
+  border: none;
 }
 
 .board-square:hover {
-  background-color: gray;
+  background-color: transparent;
+}
+
+.board-square:active {
+  background-image: url(./assets/board-square-pressed.png);
 }
 
 .board-square.occupied {
-  background-color: black;
+  background-image: url(./assets/board-square-occupied.png);
 }
-
-
-

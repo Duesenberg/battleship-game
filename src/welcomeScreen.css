@@ -48,7 +48,7 @@ body {
 
 .welcome-screen .game-title {
   grid-area: 1 / 1 / 2 / 3;
-  color: #db4161;
+  color: #e35100;
   font-family: 'Pixel 1', 'Roboto', sans-serif;
   font-size: 4.5rem;
   font-weight: 700;
@@ -115,7 +115,7 @@ body {
   }
 
   .welcome-screen .game-title {
-    color: #db4161;
+    color: #e35100;
     font-family: 'Pixel 1', 'Roboto', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
