@@ -67,8 +67,7 @@ const gameScreenContent = () => {
   }
   //game options
   const logo = insertDOMel('button', gameOptions, 'logo');
-  const restartButton = insertDOMel('button', gameOptions, 'restart-game-button', 'Restart');
-  const toggleSound = insertDOMel('button', gameOptions, 'toggle-sound');
+  const restartButton = insertDOMel('button', gameOptions, 'restart-game-button');
 }
 
 //display the no. of hits for each ship for both players
@@ -76,26 +75,26 @@ const hitDisplays = () => {
   const pOneCarrierHits = document.querySelector('.playerone-hits .carrier-hits');
   const pOneBattleshipHits = document.querySelector('.playerone-hits .battleship-hits');
   const pOneCruiserHits = document.querySelector('.playerone-hits .cruiser-hits');
-  const pOneDestroyerHits = document.querySelector('.playerone-hits .destroyer-hits');
   const pOneSubmarineHits = document.querySelector('.playerone-hits .submarine-hits');
+  const pOneDestroyerHits = document.querySelector('.playerone-hits .destroyer-hits');
 
   const pTwoCarrierHits = document.querySelector('.playertwo-hits .carrier-hits');
   const pTwoBattleshipHits = document.querySelector('.playertwo-hits .battleship-hits');
   const pTwoCruiserHits = document.querySelector('.playertwo-hits .cruiser-hits');
-  const pTwoDestroyerHits = document.querySelector('.playertwo-hits .destroyer-hits');
   const pTwoSubmarineHits = document.querySelector('.playertwo-hits .submarine-hits');
+  const pTwoDestroyerHits = document.querySelector('.playertwo-hits .destroyer-hits');
 
   pOneCarrierHits.textContent = `${gameData.player1.gameBoard.ships.carrier.hits}/5`;
   pOneBattleshipHits.textContent = `${gameData.player1.gameBoard.ships.battleship.hits}/4`;
   pOneCruiserHits.textContent = `${gameData.player1.gameBoard.ships.cruiser.hits}/3`;
-  pOneDestroyerHits.textContent = `${gameData.player1.gameBoard.ships.submarine.hits}/3`;
-  pOneSubmarineHits.textContent = `${gameData.player1.gameBoard.ships.destroyer.hits}/2`;
+  pOneDestroyerHits.textContent = `${gameData.player1.gameBoard.ships.destroyer.hits}/2`;
+  pOneSubmarineHits.textContent = `${gameData.player1.gameBoard.ships.submarine.hits}/3`;
 
   pTwoCarrierHits.textContent = `${gameData.player2.gameBoard.ships.carrier.hits}/5`;
   pTwoBattleshipHits.textContent = `${gameData.player2.gameBoard.ships.battleship.hits}/4`;
   pTwoCruiserHits.textContent = `${gameData.player2.gameBoard.ships.cruiser.hits}/3`;
-  pTwoDestroyerHits.textContent = `${gameData.player2.gameBoard.ships.submarine.hits}/3`;
-  pTwoSubmarineHits.textContent = `${gameData.player2.gameBoard.ships.destroyer.hits}/2`;
+  pTwoDestroyerHits.textContent = `${gameData.player2.gameBoard.ships.destroyer.hits}/2`;
+  pTwoSubmarineHits.textContent = `${gameData.player2.gameBoard.ships.submarine.hits}/3`;
 }
 
 //add occupied class to the ships on player 1 board
@@ -148,6 +147,11 @@ const gameScreenEventListeners = () => {
   restartButton.addEventListener('click', () => {
     restartGamePopUp();
   });
+  //git hub page visit button
+  const logoButton = document.querySelector('.logo');
+  logoButton.addEventListener('click', () => {
+    gitPagePopup();
+  })
   //player 2 board
   const playerTwoBoardSquares = document.querySelectorAll('.ptwo-board .board-square');
   playerTwoBoardSquares.forEach(square => {
@@ -176,15 +180,49 @@ const gameScreenEventListeners = () => {
 
 //pop up window for restarting the game
 const restartGamePopUp = () => {
-  const screen = document.querySelector('.game-screen');
+  //remove pop up window if one is present
+  const popUp = document.querySelector('.pop-up');
+  if (popUp !== null) {
+    if (popUp.parentNode) {
+      popUp.parentNode.removeChild(popUp);
+    }
+  }
 
+  //generate the pop up window
+  const screen = document.querySelector('.game-screen');
+  
   const popUpWindow = insertDOMel('div', screen, 'pop-up');
   const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Restart Game?');
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
-
+  
   yesButton.addEventListener('click', () => {
     restartGame(gameData);
+  });
+  noButton.addEventListener('click', () => {
+    if (popUpWindow.parentNode) {
+      popUpWindow.parentNode.removeChild(popUpWindow);
+    }
+  });
+}
+
+const gitPagePopup = () => {
+  const popUp = document.querySelector('.pop-up');
+  if (popUp !== null) {
+    if (popUp.parentNode) {
+      popUp.parentNode.removeChild(popUp);
+    }
+  }
+
+  const screen = document.querySelector('.game-screen');
+
+  const popUpWindow = insertDOMel('div', screen, 'pop-up');
+  const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Visit GitHub page?');
+  const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
+  const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
+  
+  yesButton.addEventListener('click', () => {
+    window.open('https://github.com/Duesenberg');
   });
   noButton.addEventListener('click', () => {
     if (popUpWindow.parentNode) {
@@ -201,4 +239,4 @@ const generateGameScreen = () => {
 }
 
 export {gameScreenContent, hitDisplays, generateGameScreen,
-  markPlayerOneShips, markHits, gameScreenEventListeners};
+  markPlayerOneShips, markHits, gameScreenEventListeners, gitPagePopup };

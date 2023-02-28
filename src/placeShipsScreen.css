@@ -232,7 +232,6 @@
 
 .place-ships-screen .board {
   grid-area: 2 / 2 / 3 / 3;
-  background-color: blue;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -259,7 +258,7 @@
   background-color: transparent;
 }
 
-.board-square:active {
+.place-ships-screen .board-square:active {
   background-image: url(./assets/board-square-pressed.png);
 }
 
