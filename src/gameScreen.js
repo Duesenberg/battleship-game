@@ -195,7 +195,18 @@ const restartGamePopUp = () => {
   const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Restart Game?');
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
-  
+
+  //get position of player 1 board
+  const playerOneBoard = document.querySelector('.pone-board');
+  const pOneBoardData = playerOneBoard.getBoundingClientRect();
+
+  //place pop-up window relative to the player board
+  popUpWindow.style.position = 'absolute';
+  popUpWindow.style.top = `${pOneBoardData.top + 100}px`;
+  popUpWindow.style.left = `${pOneBoardData.left + 100}px`;
+
+
+  //event listeners
   yesButton.addEventListener('click', () => {
     restartGame(gameData);
   });
@@ -220,9 +231,22 @@ const gitPagePopup = () => {
   const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Visit GitHub page?');
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
+
+  //get position of player 1 board
+  const playerOneBoard = document.querySelector('.pone-board');
+  const pOneBoardData = playerOneBoard.getBoundingClientRect();
+  
+  //place pop-up window relative to the player board
+  popUpWindow.style.position = 'absolute';
+  popUpWindow.style.top = `${pOneBoardData.top + 100}px`;
+  popUpWindow.style.left = `${pOneBoardData.left + 100}px`;
   
   yesButton.addEventListener('click', () => {
     window.open('https://github.com/Duesenberg');
+
+    if (popUpWindow.parentNode) {
+      popUpWindow.parentNode.removeChild(popUpWindow);
+    }
   });
   noButton.addEventListener('click', () => {
     if (popUpWindow.parentNode) {
@@ -230,6 +254,8 @@ const gitPagePopup = () => {
     }
   });
 }
+
+
 
 const generateGameScreen = () => {
   gameScreenContent();
