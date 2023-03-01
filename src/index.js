@@ -7,6 +7,7 @@ import { generateWelcomeScreen } from "./welcomeScreen.js";
 import "./welcomeScreen.css";
 import "./placeShipsScreen.css";
 import "./gameScreen.css";
+import "./gameOverScreen.css";
 
 window.gameData = GenerateGameData();
 

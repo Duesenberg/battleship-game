@@ -10,13 +10,8 @@ const gameOverScreenContent = () => {
   const screen = insertDOMel('div', container, 'game-over-screen');
 
   //main screen containers
-  const playerOneAvatar = insertDOMel('div', screen, 'avatar-one');
   const middleDiv = insertDOMel('div', screen, 'middle-div');
-  const playerTwoAvatar = insertDOMel('div', screen, 'avatar-two');
 
-  const pOneImage = insertDOMel('img', playerOneAvatar, 'image');
-  const pTwoImage = insertDOMel('img', playerTwoAvatar, 'image');
-  const midDivText = insertDOMel('p', middleDiv, 'text', 'Game Over!');
   const winnerText = insertDOMel('p', middleDiv, 'winner');
   const restartButton = insertDOMel('button', middleDiv, 'restart-game', 'Play Again');
 }
@@ -25,8 +20,8 @@ const gameOverScreenContent = () => {
 const displayWinner = (gameData) => {
   const winnerText = document.querySelector('.winner');
 
-  if (gameData.gameWinner === 1) winnerText.textContent = "You Win!";
-  else winnerText.textContent = "You Lose!";
+  if (gameData.gameWinner === 1) winnerText.textContent = "PLayer 1 Wins!";
+  else winnerText.textContent = "Player 2 Wins!";
 }
 
 const gameOverScreenEventListeners = () => {
