@@ -196,14 +196,14 @@ const restartGamePopUp = () => {
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
 
-  //get position of player 1 board
-  const playerOneBoard = document.querySelector('.pone-board');
-  const pOneBoardData = playerOneBoard.getBoundingClientRect();
+  //get info for container
+  const container = document.querySelector('#container');
+  const containerData = container.getBoundingClientRect();
 
   //place pop-up window relative to the player board
   popUpWindow.style.position = 'absolute';
-  popUpWindow.style.top = `${pOneBoardData.top + 100}px`;
-  popUpWindow.style.left = `${pOneBoardData.left + 100}px`;
+  popUpWindow.style.top = `${(containerData.height) / 2 - 100}px`;
+  popUpWindow.style.left = `${(containerData.width) / 2 - 200}px`;
 
 
   //event listeners
@@ -232,14 +232,14 @@ const gitPagePopup = () => {
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
 
-  //get position of player 1 board
-  const playerOneBoard = document.querySelector('.pone-board');
-  const pOneBoardData = playerOneBoard.getBoundingClientRect();
-  
+  //get info for container
+  const container = document.querySelector('#container');
+  const containerData = container.getBoundingClientRect();
+
   //place pop-up window relative to the player board
   popUpWindow.style.position = 'absolute';
-  popUpWindow.style.top = `${pOneBoardData.top + 100}px`;
-  popUpWindow.style.left = `${pOneBoardData.left + 100}px`;
+  popUpWindow.style.top = `${(containerData.height) / 2 - 100}px`;
+  popUpWindow.style.left = `${(containerData.width) / 2 - 200}px`;
   
   yesButton.addEventListener('click', () => {
     window.open('https://github.com/Duesenberg');
