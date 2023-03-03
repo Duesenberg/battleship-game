@@ -1,6 +1,7 @@
 import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
-import { clearObject, GenerateGameData, setShipType, setShipDirection }
+import { setShipType, setShipDirection }
   from "./game";
+import { clickSoundEventListeners, placeShipsSound } from "./gameSound";
 import { generateGameScreen } from "./gameScreen";
 import { loadShipLayout, layoutArray } 
   from "./computerShipLayouts";
@@ -194,6 +195,8 @@ const placeShipsScreenEventListeners = () => {
 const generatePlaceShipsScreen = () => {
   placeShipsScreenContent();
   placeShipsScreenEventListeners();
+  clickSoundEventListeners();
+  placeShipsSound();
 }
 
 export {placeShipsScreenContent, generatePlaceShipsScreen, placeShipsScreenEventListeners,

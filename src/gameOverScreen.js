@@ -1,6 +1,6 @@
-import {insertDOMel, removeAllChildNodes} 
-  from "./auxFnsDOM";
+import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
 import { restartGame } from "./game";
+import { clickSoundEventListeners } from "./gameSound";
 
 const gameOverScreenContent = () => {
   const container = document.querySelector('#container');
@@ -36,6 +36,7 @@ const generateGameOverScreen = () => {
   gameOverScreenContent();
   displayWinner(gameData);
   gameOverScreenEventListeners();
+  clickSoundEventListeners();
 }
 
 export { gameOverScreenContent, displayWinner, gameOverScreenEventListeners,

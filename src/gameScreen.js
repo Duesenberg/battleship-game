@@ -1,6 +1,6 @@
-import { insertDOMel, removeAllChildNodes } 
-  from "./auxFnsDOM";
+import { insertDOMel, removeAllChildNodes } from "./auxFnsDOM";
 import { endGame, restartGame, changeTurn, computerPlay } from "./game";
+import { clickSoundEventListeners } from "./gameSound";
 
 const gameScreenContent = () => {
   const container = document.querySelector('#container');
@@ -162,16 +162,16 @@ const gameScreenEventListeners = () => {
   
         //change turn if square is unoccupied.
         //prevents computer from playing if click is on already hit square
-        if (gameData.player2.gameBoard.board[row][column].hit === null)
+        if (gameData.player2.gameBoard.board[row][column].hit === null) 
           gameData.playerTurn = changeTurn(gameData.playerTurn);
-  
+        
         gameData.player1.attack(row, column, gameData.player2);
         markHits();
         hitDisplays();
         endGame(gameData);
   
         //computer makes a move if turn has been changed
-        if (gameData.playerTurn === 2 && gameData.gameWinner === null)
+        if (gameData.playerTurn === 2 && gameData.gameWinner === null) 
           computerPlay();
       }
     });
@@ -195,6 +195,21 @@ const restartGamePopUp = () => {
   const popUpMessage = insertDOMel('p', popUpWindow, 'message', 'Restart Game?');
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
+
+  //add sound to buttons
+  const clickSound = new Audio('https://cdn.pixabay.com/audio/2022/03/25/audio_7a32f97753.mp3');
+  yesButton.addEventListener('click', () => {
+    if (gameData.muted === false) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    } 
+  });
+  noButton.addEventListener('click', () => {
+    if (gameData.muted === false) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    } 
+  });
 
   //get info for container
   const container = document.querySelector('#container');
@@ -232,6 +247,21 @@ const gitPagePopup = () => {
   const yesButton = insertDOMel('button', popUpWindow, 'yes-button', 'Yes');
   const noButton = insertDOMel('button', popUpWindow, 'no-button', 'No');
 
+  //add sound to buttons
+  const clickSound = new Audio('https://cdn.pixabay.com/audio/2022/03/25/audio_7a32f97753.mp3');
+  yesButton.addEventListener('click', () => {
+    if (gameData.muted === false) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    } 
+  });
+  noButton.addEventListener('click', () => {
+    if (gameData.muted === false) {
+      clickSound.currentTime = 0;
+      clickSound.play();
+    } 
+  });
+
   //get info for container
   const container = document.querySelector('#container');
   const containerData = container.getBoundingClientRect();
@@ -262,6 +292,7 @@ const generateGameScreen = () => {
   markPlayerOneShips();
   hitDisplays();
   gameScreenEventListeners();
+  clickSoundEventListeners();
 }
 
 export {gameScreenContent, hitDisplays, generateGameScreen,

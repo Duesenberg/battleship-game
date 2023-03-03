@@ -1,4 +1,5 @@
 import { Ship } from "./ship";
+import { hitOrMissSound } from "./gameSound";
 
 const Gameboard = () => {
   //generate a 10x10 matrix, each cell with an object that contains
@@ -126,9 +127,12 @@ const Gameboard = () => {
       this.board[row][column].hit = true;
       this.ships[`${this.board[row][column].ship}`].hit();
       this.ships[`${this.board[row][column].ship}`].isSunk();
+      hitOrMissSound(row, column, this);
     } 
-    else if (this.board[row][column].ship === null) 
+    else if (this.board[row][column].ship === null) {
       this.board[row][column].hit = false;
+      hitOrMissSound(row, column, this);
+    }
   };
 
   //check if all ships are placed on game board

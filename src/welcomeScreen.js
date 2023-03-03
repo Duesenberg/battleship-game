@@ -1,7 +1,7 @@
 import {insertDOMel, removeAllChildNodes} 
   from "./auxFnsDOM";
 import { generatePlaceShipsScreen } from "./placeShipsScreen";
-import { toggleSound } from "./game";
+import { toggleSound, clickSoundEventListeners } from "./gameSound.js";
 
 //generate the welcome screen content
 const welcomeScreenContent = () => {
@@ -19,18 +19,20 @@ const welcomeScreenContent = () => {
 const generateWelcomeScreen = () => {
   welcomeScreenContent();
 
-  const startGameButton = document.querySelector('.start-game');
-  startGameButton.addEventListener('click', () => {
-    generatePlaceShipsScreen();//generate next screen, for placing ships
-  });
-
   const soundButton = document.querySelector('.sound-button');
   soundButton.addEventListener('click', () => {
     gameData.muted = toggleSound(gameData);
 
     if (gameData.muted === true) soundButton.classList.add('muted');
     else soundButton.classList.remove('muted');
-  })
+  });
+
+  const startGameButton = document.querySelector('.start-game');
+  startGameButton.addEventListener('click', () => {
+    generatePlaceShipsScreen();//generate next screen, for placing ships
+  });
+
+  clickSoundEventListeners();
 }
 
 export { welcomeScreenContent, generateWelcomeScreen };
