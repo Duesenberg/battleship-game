@@ -1,6 +1,7 @@
 import {insertDOMel, removeAllChildNodes} from "./auxFnsDOM";
 import { restartGame } from "./game";
 import { clickSoundEventListeners } from "./gameSound";
+import { stopAudio } from "./gameSound";
 
 const gameOverScreenContent = () => {
   const container = document.querySelector('#container');
@@ -20,7 +21,7 @@ const gameOverScreenContent = () => {
 const displayWinner = (gameData) => {
   const winnerText = document.querySelector('.winner');
 
-  if (gameData.gameWinner === 1) winnerText.textContent = "PLayer 1 Wins!";
+  if (gameData.gameWinner === 1) winnerText.textContent = "Player 1 Wins!";
   else winnerText.textContent = "Player 2 Wins!";
 }
 
@@ -29,6 +30,7 @@ const gameOverScreenEventListeners = () => {
 
   restartButton.addEventListener('click', () => {
     restartGame(gameData);
+    stopAudio(gameOverSong);
   })
 }
 

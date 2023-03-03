@@ -53,4 +53,17 @@ const placeShipsSound = () => {
   });
 }
 
-export { toggleSound, clickSoundEventListeners, hitOrMissSound, placeShipsSound };
+const playAudio = (audio) => {
+  if (gameData.muted === false) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+const stopAudio = (audio) => {
+  audio.currentTime = 0;
+  audio.pause();
+}
+
+export { toggleSound, clickSoundEventListeners, hitOrMissSound, placeShipsSound,
+playAudio, stopAudio };

@@ -2,6 +2,7 @@ import { Player } from "./player";
 import { generateWelcomeScreen } from "./welcomeScreen";
 import { markHits, hitDisplays } from "./gameScreen";
 import { generateGameOverScreen } from "./gameOverScreen";
+import { playAudio } from "./gameSound";
 
 //generate object containing game data
 const GenerateGameData = () => {
@@ -11,7 +12,7 @@ const GenerateGameData = () => {
     playerTurn: 1,
     gameWinner: null,
     shipPlacement: ['carrier', 'right'],
-    muted: false
+    muted: true
   }
 }
 
@@ -76,6 +77,7 @@ const endGame = (gameData) => {
   if (gameOver(gameData) === true) {
     gameData.gameWinner = gameWinner(gameData);
     generateGameOverScreen();
+    playAudio(gameOverSong);
   }
 }
 
