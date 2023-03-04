@@ -17,10 +17,9 @@ const welcomeScreenContent = () => {
   soundButton.classList.add('muted');
 }
 
-//add event listener after gen. screen content as well
-const generateWelcomeScreen = () => {
-  welcomeScreenContent();
-  
+//event listeners
+const welcomeScreenEventListeners = () => {
+  //sound button
   const soundButton = document.querySelector('.sound-button');
   soundButton.addEventListener('click', () => {
     gameData.muted = toggleSound(gameData);//toggle muted property
@@ -33,7 +32,7 @@ const generateWelcomeScreen = () => {
       playAudio(welcomeSong);
     }
   });
-  
+  //start button
   const startGameButton = document.querySelector('.start-game');
   startGameButton.addEventListener('click', () => {
     stopAudio(welcomeSong);// stop the welcome screen song
@@ -43,4 +42,11 @@ const generateWelcomeScreen = () => {
   clickSoundEventListeners();
 }
 
-export { welcomeScreenContent, generateWelcomeScreen };
+//add event listener after gen. screen content as well
+const generateWelcomeScreen = () => {
+  welcomeScreenContent();
+  welcomeScreenEventListeners();
+}
+
+export { welcomeScreenContent, generateWelcomeScreen,
+  welcomeScreenEventListeners };

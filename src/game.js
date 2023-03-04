@@ -1,6 +1,6 @@
 import { Player } from "./player";
 import { generateWelcomeScreen } from "./welcomeScreen";
-import { markHits, hitDisplays } from "./gameScreen";
+import { markHits, hitDisplays } from "./gameScreenAuxFns";
 import { generateGameOverScreen } from "./gameOverScreen";
 import { playAudio } from "./gameSound";
 
