@@ -1,51 +1,51 @@
 .game-over-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .middle-div {
-  width: 680px;
-  height: 200px;
-  background-image: url(./assets/pop-up-panel.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-color: transparent;
-  border: none;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
+	width: 680px;
+	height: 200px;
+	background-image: url(./assets/pop-up-panel.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	background-color: transparent;
+	border: none;
+	padding: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
 }
 
 .winner {
-  color: black;
-  font-family: 'Pixel 2', 'Roboto', sans-serif;
-  font-size: 1rem;
+	color: black;
+	font-family: 'Pixel 2', 'Roboto', sans-serif;
+	font-size: 1rem;
 }
 
 .restart-game {
-  width: 140px;
-  height: 40px;
-  color: black;
-  font-family: 'Pixel 2', 'Roboto', sans-serif;
-  font-size: .6rem;
-  background-image: url(./assets/Ship-selection-button-normal.png);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 140px 40px;
-  background-color: transparent;
-  border: none;
-  text-align: center;
+	width: 140px;
+	height: 40px;
+	color: black;
+	font-family: 'Pixel 2', 'Roboto', sans-serif;
+	font-size: 0.6rem;
+	background-image: url(./assets/Ship-selection-button-normal.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 140px 40px;
+	background-color: transparent;
+	border: none;
+	text-align: center;
 }
 
 .restart-game:hover {
-  color: white;
+	color: white;
 }
 
 .restart-game:active {
-  background-image: url(./assets/Ship-selection-button-pressedl.png);
+	background-image: url(./assets/Ship-selection-button-pressedl.png);
 }

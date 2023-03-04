@@ -1,7 +1,7 @@
-//returns a ship object.
-//accepts 5 types of value: carrier, battleship, cruiser, submarine, destroyer
+// returns a ship object.
+// accepts 5 types of value: carrier, battleship, cruiser, submarine, destroyer
 const Ship = (shipType) => {
-  //logic for setting length depending on shipType
+  // logic for setting length depending on shipType
   let length;
 
   switch (shipType) {
@@ -20,9 +20,11 @@ const Ship = (shipType) => {
     case 'destroyer':
       length = 2;
       break;
+    default:
+      break;
   }
 
-  //methods
+  // methods
   const hit = function () {
     this.hits < this.length ? this.hits += 1 : null;
   };
@@ -38,8 +40,8 @@ const Ship = (shipType) => {
     sunk: false,
     placed: false,
     hit,
-    isSunk
-  }
+    isSunk,
+  };
 };
 
-export {Ship};
+export { Ship };

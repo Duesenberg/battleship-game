@@ -53,17 +53,6 @@ const restartGame = (gameData) => {
   window.gameData = GenerateGameData();
 };
 
-// computer makes a move
-const computerPlay = async () => {
-  setTimeout(() => {
-    gameData.player2.randomAttack(gameData.player1);
-    markHits();
-    hitDisplays();
-    gameData.playerTurn = changeTurn(gameData.playerTurn);
-    endGame(gameData);
-  }, 1000);
-};
-
 // return 1 if player 1 wins, else 2.
 const gameWinner = (gameData) => {
   if (gameData.player2.gameBoard.allShipsSunk() === true) return 1;
@@ -77,6 +66,17 @@ const endGame = (gameData) => {
     generateGameOverScreen();
     playAudio(gameOverSong);
   }
+};
+
+// computer makes a move
+const computerPlay = async () => {
+  setTimeout(() => {
+    gameData.player2.randomAttack(gameData.player1);
+    markHits();
+    hitDisplays();
+    gameData.playerTurn = changeTurn(gameData.playerTurn);
+    endGame(gameData);
+  }, 1000);
 };
 
 export {
